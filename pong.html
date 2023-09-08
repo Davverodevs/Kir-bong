@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        #gameCanvas {
+            background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your image */
+            background-size: cover; /* Adjusts the image size to cover the canvas */
+            position: absolute; /* Allows precise positioning */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <!-- Add any additional CSS or external libraries here -->
+</head>
+<body>
+    <!-- Your audio element for background music -->
+    <audio id="backgroundMusic" src="ng5.mp3" loop></audio>
+
+    <button id="playButton">Play Music</button>
+    <button id="stopButton">Stop Music</button>
+
+    <!-- Your game content goes here -->
+    <canvas id="gameCanvas" width="1250" height="500"></canvas>
+
+    <!-- Include your JavaScript file here -->
+    <script src="pong.js"></script>
+    <script>
+        // Your JavaScript code here
+        const backgroundMusic = document.getElementById("backgroundMusic");
+        const playButton = document.getElementById("playButton");
+        const stopButton = document.getElementById("stopButton");
+
+        playButton.addEventListener("click", () => {
+            backgroundMusic.play();
+        });
+
+        stopButton.addEventListener("click", () => {
+            backgroundMusic.pause();
+            backgroundMusic.currentTime = 0;
+        });
+    </script>
+</body>
+</html>
