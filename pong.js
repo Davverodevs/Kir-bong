@@ -16,6 +16,8 @@ const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
+const playButton = document.getElementById("playButton");
+const stopButton = document.getElementById("stopButton");
 
 const ball = {
     x: canvas.width / 2,
@@ -31,19 +33,33 @@ const player = {
     y: canvas.height / 2 - paddleHeight / 2,
     width: paddleWidth,
     height: paddleHeight,
-    speed: 1
+    speed: 1,
+    color: "pink"
 };
 
 const computer = {
     x: canvas.width - paddleWidth,
-    y: (canvas.height / 2 - paddleHeight / 2) / 4,
+    y: (canvas.height / 2 - paddleHeight / 2) / 3,
     width: paddleWidth,
-    height: paddleHeight * 4,
-    speed: 3
+    height: paddleHeight * 3,
+    speed: 3,
+    color: "red"
 };
 
 // Set the volume to a value between 0 (muted) and 1 (full volume)
 backgroundMusic.volume = 0.5; // Adjust the value as needed
+
+// Function to update the player's name display
+function updatePlayerNameDisplay() {
+    const playerName = document.getElementById("playerName");
+    playerName.src = "Kirbo3.png"; // Update the image source
+}
+
+// Function to update the computer's name display
+function updateComputerNameDisplay() {
+    const computerName = document.getElementById("computerName");
+    computerName.src = "DorkMind3.png"; // Update the image source
+}
 
 // Start playing the background music
 function playBackgroundMusic() {
@@ -106,11 +122,11 @@ function drawGameElements() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw the player's paddle
-    ctx.fillStyle = "#00FF00"; // Set the fill color (green)
+    ctx.fillStyle = player.color; // Set the fill color (green)
     ctx.fillRect(player.x, player.y, player.width, player.height);
 
     // Draw the computer's paddle
-    ctx.fillStyle = "#FF0000"; // Set the fill color (red)
+    ctx.fillStyle = computer.color; // Set the fill color (red)
     ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
 
     // Draw the ball as a filled circle
@@ -123,10 +139,10 @@ function drawGameElements() {
     // Draw the player's score
     ctx.fillStyle = "#000000"; // Set the fill color (white)
     ctx.font = "24px Arial"; // Set the font size and style
-    ctx.fillText("Player: " + playerScore, 20, 30);
+    ctx.fillText("Kirby: " + playerScore, 20, 30);
 
     // Draw the computer's score
-    ctx.fillText("Computer: " + computerScore, canvas.width - 180, 30);
+    ctx.fillText("Dark Mind: " + computerScore, canvas.width - 180, 30);
 }
 
 
@@ -145,6 +161,21 @@ function updateGameLogic() {
         player.y = 0;
     } else if (player.y + player.height > canvas.height) {
         player.y = canvas.height - player.height;
+    }
+
+    // Update the computer's paddle position to track the ball
+    const computerTargetY = ball.y - computer.height / 2;
+    if (computerTargetY < computer.y) {
+        computer.y -= computer.speed * deltaTime;
+    } else if (computerTargetY > computer.y) {
+        computer.y += computer.speed * deltaTime;
+    }
+
+    // Ensure the computer's paddle stays within the canvas boundaries
+    if (computer.y < 0) {
+        computer.y = 0;
+    } else if (computer.y + computer.height > canvas.height) {
+        computer.y = canvas.height - computer.height;
     }
 
     // Update ball position
@@ -221,11 +252,11 @@ function gameLoop(timestamp) {
         if (playerScore >= scoreLimit) {
             // Player wins
             gameIsRunning = false; // End the game
-            handleGameOver("Player"); // Display winner message
+            handleGameOver("Kirby"); // Display winner message
         } else if (computerScore >= scoreLimit) {
             // Computer wins
             gameIsRunning = false; // End the game
-            handleGameOver("Computer"); // Display winner message
+            handleGameOver("Dark Mind"); // Display winner message
         }
     }
 }
@@ -258,8 +289,28 @@ document.addEventListener("keyup", handleKeyUp);
 // Add an event listener to restart the game when 'R' is pressed
 document.addEventListener("keydown", function (event) {
     if (event.key === "r" || event.key === "R") {
+        console.log("R key pressed"); // Add this line
         restartGame();
     }
+});
+// Add an event listener to restart the game when 'R' is pressed
+document.addEventListener("keydown", function (event) {
+    if (event.key === "r" || event.key === "R") {
+        restartGame();
+    }
+});
+
+playButton.addEventListener("click", () => {
+    if (backgroundMusic.paused) {
+        backgroundMusic.play().catch(error => {
+            console.error("Error playing music:", error);
+        });
+    }
+});
+
+stopButton.addEventListener("click", () => {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
 });
 
 // Assign the setup function to the image's onload event

@@ -13,19 +13,50 @@
             top: 0;
             width: 100%;
             height: 100%;
+            z-index: -1; /* Set the z-index to a negative value to place it below other elements */
         }
     </style>
-    <!-- Add any additional CSS or external libraries here -->
+    <style>
+        /* Style for the button */
+        .bottom-right-button {
+            position: fixed;
+            bottom: 20px; /* Adjust the distance from the bottom as needed */
+            right: 20px; /* Adjust the distance from the right as needed */
+            padding: 10px 20px; /* Adjust padding as needed */
+            background-color: #007bff; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* Remove border */
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        /* Style for the image */
+        .right-image {
+            /* Use margin-left to move the image to the right */
+            margin-left: 860px; /* Adjust the margin as needed */
+        }
+    </style>
+    <style>
+        /* Style for the image */
+        .left-image {
+            /* Use margin-left to move the image to the right */
+            margin-left: 110px; /* Adjust the margin as needed */
+        }
+    </style>
 </head>
 <body>
     <!-- Your audio element for background music -->
     <audio id="backgroundMusic" src="ng3.mp3" loop></audio>
 
-    <button id="playButton">Play Music</button>
-    <button id="stopButton">Stop Music</button>
-
     <!-- Your game content goes here -->
     <canvas id="gameCanvas" width="1250" height="500"></canvas>
+
+    <!-- Replace the player and computer name elements with img tags -->
+    <img class="left-image"id="playerName" src="Kirbo3.png" alt="Player Name" />
+    <img class="right-image" id="computerName" src="DorkMind3.png" alt="Computer Name" />
+
+    <button id="playButton" class="bottom-right-button">Play Music</button>
+    <button id="stopButton" class="bottom-right-button">Stop Music</button>
 
     <!-- Include your JavaScript file here -->
     <script src="pong.js"></script>
@@ -40,12 +71,10 @@
                 backgroundMusic.play().catch(error => {
                     console.error("Error playing music:", error);
                 });
+            } else {
+                backgroundMusic.pause();
+                backgroundMusic.currentTime = 0;
             }
-        });
-
-        stopButton.addEventListener("click", () => {
-            backgroundMusic.pause();
-            backgroundMusic.currentTime = 0;
         });
     </script>
 </body>
