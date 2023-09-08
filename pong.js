@@ -9,14 +9,22 @@ let upPressed = false;
 let downPressed = false;
 
 const scoreLimit = 10; // Set a score limit for winning the game (adjust as needed)
-const initialBallSpeedX = 2; // Adjust the initial X-axis speed as needed
-const initialBallSpeedY = 2; // Adjust the initial Y-axis speed as needed
+const initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
+const initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
 const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
-const ball = new Image();
+
+const ball = {
+    x: canvas.width / 2,
+    y: canvas.height / 2,
+    radius: 10,
+    speedX: initialBallSpeedX,
+    speedY: initialBallSpeedY,
+    ballColor: "pink",
+};
 
 const player = {
     x: 0,
@@ -36,12 +44,13 @@ const computer = {
 
 // Set the volume to a value between 0 (muted) and 1 (full volume)
 backgroundMusic.volume = 0.5; // Adjust the value as needed
-playBackgroundMusic();
 
 // Start playing the background music
 function playBackgroundMusic() {
     backgroundMusic.play();
 }
+
+playBackgroundMusic();
 
 // Stop the background music
 function stopBackgroundMusic() {
@@ -56,6 +65,7 @@ function initializeGame() {
     ball.radius = 10;
     ball.speedX = initialBallSpeedX;
     ball.speedY = initialBallSpeedY;
+    ball.ballColor = "pink";
 }
 
 // Function to handle keydown events
@@ -103,8 +113,12 @@ function drawGameElements() {
     ctx.fillStyle = "#FF0000"; // Set the fill color (red)
     ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
 
-    // Draw the ball (as an image)
-    ctx.drawImage(ball, ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2);
+    // Draw the ball as a filled circle
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+    ctx.fillStyle = ball.ballColor; // Set the ball color
+    ctx.fill();
+    ctx.closePath();
 
     // Draw the player's score
     ctx.fillStyle = "#000000"; // Set the fill color (white)
@@ -183,6 +197,7 @@ function updateGameLogic() {
 }
 
 function gameLoop(timestamp) {
+    playBackgroundMusic();
 
     // Calculate deltaTime (time elapsed since the last frame)
     deltaTime = timestamp - lastTime;
@@ -250,10 +265,5 @@ document.addEventListener("keydown", function (event) {
 // Assign the setup function to the image's onload event
 ball.onload = setupGameAfterImageLoad;
 
-// Load the ball image (keep the path as is)
-ball.src = "/Development/PONG/ball2.png";
-
 // Start the game loop when the game begins
 gameLoop(0); // Pass 0 as the initial timestamp
-
-

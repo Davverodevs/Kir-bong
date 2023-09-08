@@ -19,7 +19,7 @@
 </head>
 <body>
     <!-- Your audio element for background music -->
-    <audio id="backgroundMusic" src="ng5.mp3" loop></audio>
+    <audio id="backgroundMusic" src="ng3.mp3" loop></audio>
 
     <button id="playButton">Play Music</button>
     <button id="stopButton">Stop Music</button>
@@ -36,7 +36,11 @@
         const stopButton = document.getElementById("stopButton");
 
         playButton.addEventListener("click", () => {
-            backgroundMusic.play();
+            if (backgroundMusic.paused) {
+                backgroundMusic.play().catch(error => {
+                    console.error("Error playing music:", error);
+                });
+            }
         });
 
         stopButton.addEventListener("click", () => {
