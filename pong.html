@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pong Game</title>
     <style>
+        /* Add this style to hide the menu by default */
+        #menu {
+            display: none;
+        }
         #gameCanvas {
-            background-image: url('background.jpg'); /* Replace 'background.jpg' with the path to your image */
+            background-image: url('Backgrounds/background.jpg'); /* Replace 'background.jpg' with the path to your image */
             background-size: cover; /* Adjusts the image size to cover the canvas */
             position: absolute; /* Allows precise positioning */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            z-index: -1; /* Set the z-index to a negative value to place it below other elements */
+            z-index: -10; /* Set the z-index to a negative value to place it below other elements */
         }
-    </style>
-    <style>
         /* Style for the button */
         .bottom-right-button {
             position: fixed;
@@ -28,32 +30,41 @@
             border: none; /* Remove border */
             cursor: pointer;
         }
-    </style>
-    <style>
-        /* Style for the image */
-        .right-image {
-            /* Use margin-left to move the image to the right */
-            margin-left: 860px; /* Adjust the margin as needed */
+        /* Style for the container holding the player and computer images */
+        .image-container {
+            display: flex; /* Use flexbox to control layout */
+            justify-content: space-between; /* Space items evenly in the container */
+            padding: 20px; /* Add padding as needed */
         }
-    </style>
-    <style>
         /* Style for the image */
         .left-image {
-            /* Use margin-left to move the image to the right */
-            margin-left: 110px; /* Adjust the margin as needed */
+            /* Remove margin-left and adjust width as needed */
+            width: 50px; /* Adjust the width as needed */
+        }
+        /* Style for the image */
+        .right-image {
+            /* Remove margin-left and adjust width as needed */
+            width: 50px; /* Adjust the width as needed */
         }
     </style>
 </head>
 <body>
     <!-- Your audio element for background music -->
-    <audio id="backgroundMusic" src="ng3.mp3" loop></audio>
+    <audio id="backgroundMusic" src="BGM/ng3.mp3" loop></audio>
 
     <!-- Your game content goes here -->
     <canvas id="gameCanvas" width="1250" height="500"></canvas>
+    <div id="menu">
+        <h1>kir-bong</h1>
+        <button id="startButton">Start Game</button>
+        <button id="instructionsButton">Instructions</button>
+    </div>
 
     <!-- Replace the player and computer name elements with img tags -->
-    <img class="left-image"id="playerName" src="Kirbo3.png" alt="Player Name" />
-    <img class="right-image" id="computerName" src="DorkMind3.png" alt="Computer Name" />
+    <div class="image-container">
+        <img class="left-image"id="playerName" src="MC/Kirbo3.png" alt="Player Name" />
+        <img class="right-image" id="computerName" src="Bosses/DorkMind3.png" alt="Computer Name" />
+    </div>
 
     <button id="playButton" class="bottom-right-button">Play Music</button>
     <button id="stopButton" class="bottom-right-button">Stop Music</button>

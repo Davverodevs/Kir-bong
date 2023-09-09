@@ -7,18 +7,23 @@ let winner = "";
 // Define variables to track player input
 let upPressed = false;
 let downPressed = false;
-
+let gameOver = false;
+let rPressed = false;
+// Get references to the menu and canvas elements
+const menu = document.getElementById("menu");
+const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
+// Add event listeners for the menu buttons
+const startButton = document.getElementById("startButton");
+const instructionsButton = document.getElementById("instructionsButton");
 const scoreLimit = 10; // Set a score limit for winning the game (adjust as needed)
 const initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
 const initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
-const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
 const playButton = document.getElementById("playButton");
 const stopButton = document.getElementById("stopButton");
-
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -27,7 +32,6 @@ const ball = {
     speedY: initialBallSpeedY,
     ballColor: "pink",
 };
-
 const player = {
     x: 0,
     y: canvas.height / 2 - paddleHeight / 2,
@@ -36,7 +40,6 @@ const player = {
     speed: 1,
     color: "pink"
 };
-
 const computer = {
     x: canvas.width - paddleWidth,
     y: (canvas.height / 2 - paddleHeight / 2) / 3,
@@ -46,27 +49,68 @@ const computer = {
     color: "red"
 };
 
+// Add an event listener to the "Start Game" button
+document.getElementById("startButton").addEventListener("click", () => {
+    // Show the menu when the button is clicked
+    document.getElementById("menu").style.display = "block";
+});
+// Add event listeners to handle player input
+document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+    // Add an event listener for the "R" keydown event
+    document.addEventListener("keydown", handleRestart);
+});
+
+startButton.addEventListener("click", () => {
+    console.log("Start button clicked"); // Add this line
+    // Start the game when the "Start Game" button is clicked
+    canvas.style.display = "block";
+    menu.style.display = "none";
+    initializeGame(); // Start the game logic
+});
+
+instructionsButton.addEventListener("click", () => {
+    // Display game instructions when the "Instructions" button is clicked
+    alert("just have fun :)");
+});
+
+playButton.addEventListener("click", () => {
+    if (backgroundMusic.paused) {
+        backgroundMusic.play().catch(error => {
+            console.error("Error playing music:", error);
+        });
+    }
+});
+
+stopButton.addEventListener("click", () => {
+    backgroundMusic.pause();
+    backgroundMusic.currentTime = 0;
+});
+
+// Initially, hide the game canvas and show the menu
+canvas.style.display = "none";
+menu.style.display = "block";
+
 // Set the volume to a value between 0 (muted) and 1 (full volume)
 backgroundMusic.volume = 0.5; // Adjust the value as needed
 
 // Function to update the player's name display
 function updatePlayerNameDisplay() {
     const playerName = document.getElementById("playerName");
-    playerName.src = "Kirbo3.png"; // Update the image source
+    playerName.src = "/MC/Kirbo3.png"; // Update the image source
 }
 
 // Function to update the computer's name display
 function updateComputerNameDisplay() {
     const computerName = document.getElementById("computerName");
-    computerName.src = "DorkMind3.png"; // Update the image source
+    computerName.src = "/Bosses/DorkMind3.png"; // Update the image source
 }
 
 // Start playing the background music
 function playBackgroundMusic() {
     backgroundMusic.play();
 }
-
-playBackgroundMusic();
 
 // Stop the background music
 function stopBackgroundMusic() {
@@ -82,6 +126,15 @@ function initializeGame() {
     ball.speedX = initialBallSpeedX;
     ball.speedY = initialBallSpeedY;
     ball.ballColor = "pink";
+    playBackgroundMusic();
+}
+
+// Function to reset the ball's position after a point is scored
+function resetBall() {
+    ball.x = canvas.width / 2;
+    ball.y = canvas.height / 2;
+    ball.speedX = initialBallSpeedX; // Set initial speed
+    ball.speedY = initialBallSpeedY; // Set initial speed
 }
 
 // Function to handle keydown events
@@ -102,19 +155,19 @@ function handleKeyUp(event) {
     }
 }
 
-// Function to reset the ball's position after a point is scored
-function resetBall() {
-    ball.x = canvas.width / 2;
-    ball.y = canvas.height / 2;
-    ball.speedX = initialBallSpeedX; // Set initial speed
-    ball.speedY = initialBallSpeedY; // Set initial speed
-}
+function handleRKey(event) {
+    if (event.key === "r" || event.key === "R") {
+        restartGame();
+    }
+};
 
 function restartGame() {
     playerScore = 0;
     computerScore = 0;
     resetBall(); // Reset ball position
+    gameOver = false;
     gameIsRunning = true; // Restart the game
+    playBackgroundMusic();
 }
 
 function drawGameElements() {
@@ -224,12 +277,16 @@ function updateGameLogic() {
         gameIsRunning = false;
     }
 
+    // Restart game when pressing the R key
+    if (rPressed) {
+        // Restart game
+        restartGame();
+    } 
+
     // Other game logic...
 }
 
 function gameLoop(timestamp) {
-    playBackgroundMusic();
-
     // Calculate deltaTime (time elapsed since the last frame)
     deltaTime = timestamp - lastTime;
     lastTime = timestamp;
@@ -278,43 +335,26 @@ function displayWinner(winner) {
 }
 
 function handleGameOver(winner) {
-    stopBackgroundMusic();
-    gameIsRunning = false; // End the game
+    // stopBackgroundMusic();
+    gameOver = true; // Set the game over flag
     displayWinner(winner); // Display "Game Over" message
+    gameIsRunning = false; // Stop the game
+    canvas.style.display = "none"; // Hide the canvas
+    menu.style.display = "block"; // Show the menu
 }
 
-// Add event listeners to handle player input
-document.addEventListener("keydown", handleKeyDown);
-document.addEventListener("keyup", handleKeyUp);
-// Add an event listener to restart the game when 'R' is pressed
-document.addEventListener("keydown", function (event) {
-    if (event.key === "r" || event.key === "R") {
-        console.log("R key pressed"); // Add this line
-        restartGame();
-    }
-});
-// Add an event listener to restart the game when 'R' is pressed
-document.addEventListener("keydown", function (event) {
+function handleRestart(event) {
     if (event.key === "r" || event.key === "R") {
         restartGame();
+        // rPressed = true
+        gameOver = false; // Reset the game over flag
+        gameIsRunning = true
     }
-});
+}
 
-playButton.addEventListener("click", () => {
-    if (backgroundMusic.paused) {
-        backgroundMusic.play().catch(error => {
-            console.error("Error playing music:", error);
-        });
-    }
-});
+// // Assign the setup function to the image's onload event
+// ball.onload = setupGameAfterImageLoad;
 
-stopButton.addEventListener("click", () => {
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
-});
-
-// Assign the setup function to the image's onload event
-ball.onload = setupGameAfterImageLoad;
-
+// playBackgroundMusic();
 // Start the game loop when the game begins
 gameLoop(0); // Pass 0 as the initial timestamp
