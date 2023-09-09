@@ -13,5 +13,19 @@ TODO:
 -Add +9 levels (one for each boss with its artwork)
 
 Nice to have:
--Abilities for each character
+-Abilities for each character 
+  -Multiple balls
+  -Multiple paddles
+  -Large ball
+  -Small ball
+  -Paddle-destroyer ball
+  -Invisible ball
+  -Ghost ball (goes through paddles)
+  -Unbreakable paddle
+  -Large Paddle
+  -Mini Paddle
+  -Fast Ball
+  -Slow Ball
+  -Fast Paddle
+  -Slow Paddle
 -1 song per boss/level?
