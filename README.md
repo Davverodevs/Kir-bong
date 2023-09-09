@@ -2,11 +2,11 @@
 based on the PONG game with a kirby thematic 
 
 TODO:
--Make Music buttons work
--Make restart button work
--Add Welcome  Menu
-  -Single Player
-  -Multiplayer
+-Add more Music buttons/options
+-Make restart button work after a game over
+-Add to Welcome Menu
+  -Single Player option
+  -Multiplayer option
   -Change Settings
   -Languages (4-5 european ones)
 -Add levels (3-10)
