@@ -1,4 +1,4 @@
-# Kir-bong is a project-game in its initial phase (proposed launchdate is 01.11.2023)
+# Kir-bong is a project-game in its initial phase (proposed launch date is 01.11.2023)
 Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
