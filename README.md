@@ -3,17 +3,18 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
--Add different paddle sizes for each boss
+-Add different paddle sizes for each boss?
 -Make restart button work after a game over
--Fix Welcome Menu (cuter and functional)
+-Make Welcome Menu cuter and give it more functions
 -Add to Welcome Menu
   -Single Player option
   -Multiplayer option
-  -Change Settings
-  -Languages (en, es, fr, de, it?, pt?, ...?)
+  -Change Settings 
+    -Difficulty (easy, normal, hard, insane?)
+    -Languages (en, es, fr, de, it?, pt?, ...?)
 
 Nice to have:
--Abilities for each character 
+-Abilities for each character?
   -Multiple balls
   -Multiple paddles
   -Large ball
