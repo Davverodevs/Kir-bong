@@ -23,6 +23,7 @@ const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
 const playButton = document.getElementById("playButton");
+const ballImage = document.getElementById("ballImage");
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -154,12 +155,6 @@ function handleKeyUp(event) {
     }
 }
 
-function handleRKey(event) {
-    if (event.key === "r" || event.key === "R") {
-        restartGame();
-    }
-};
-
 function restartGame() {
     playerScore = 0;
     computerScore = 0;
@@ -168,6 +163,12 @@ function restartGame() {
     gameIsRunning = true; // Restart the game
     playBackgroundMusic();
 }
+
+function handleRKey(event) {
+    if (event.key === "r" || event.key === "R") {
+        restartGame();
+    }
+};
 
 function drawGameElements() {
     // Clear the canvas
@@ -187,12 +188,8 @@ function drawGameElements() {
      ctx.lineWidth = 2; // Set the border width
      ctx.strokeRect(computer.x, computer.y, computer.width, computer.height); // Draw the border
 
-    // Draw the ball as a filled circle
-    ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fillStyle = ball.ballColor; // Set the ball color
-    ctx.fill();
-    ctx.closePath();
+    // Draw the ball image
+    ctx.drawImage(ballImage, ball.x - ball.radius, ball.y - ball.radius, ball.radius * 2, ball.radius * 2);
 
     // Draw the player's score
     ctx.fillStyle = "#000000"; // Set the fill color (white)
@@ -325,6 +322,11 @@ function gameLoop(timestamp) {
     }
 }
 
+function setupGameAfterImageLoad() {
+    initializeGame(); // Call the initialization function
+    requestAnimationFrame(gameLoop); // Start the game loop
+}
+
 // Function to set up the game when the ball image is loaded
 function setupGameAfterImageLoad() {
     initializeGame(); // Call the initialization function
@@ -353,9 +355,6 @@ function handleGameOver(winner) {
 function handleRestart(event) {
     if (event.key === "r" || event.key === "R") {
         restartGame();
-        // rPressed = true
-        gameOver = false; // Reset the game over flag
-        gameIsRunning = true
     }
 }
 
