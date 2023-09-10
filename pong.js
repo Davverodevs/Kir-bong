@@ -15,7 +15,7 @@ const canvas = document.getElementById("gameCanvas"); // Get a reference to the 
 // Add event listeners for the menu buttons
 const startButton = document.getElementById("startButton");
 const instructionsButton = document.getElementById("instructionsButton");
-const scoreLimit = 10; // Set a score limit for winning the game (adjust as needed)
+const scoreLimit = 3; // Set a score limit for winning the game (adjust as needed)
 const initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
 const initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
@@ -24,6 +24,7 @@ const paddleWidth = 10;
 const paddleHeight = 100;
 const playButton = document.getElementById("playButton");
 const ballImage = document.getElementById("ballImage");
+// Change the src attribute to the new image source
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -40,14 +41,6 @@ const player = {
     speed: 1,
     color: "pink"
 };
-const computer = {
-    x: canvas.width - paddleWidth,
-    y: (canvas.height / 2 - paddleHeight / 2),
-    width: paddleWidth,
-    height: paddleHeight,
-    speed: 3,
-    color: "red"
-};
 const songs = [
     document.getElementById("ng1"),
     document.getElementById("ng2"),
@@ -61,8 +54,32 @@ const songs = [
     document.getElementById("ng10"),
     // Add more audio elements for additional songs as needed
 ];
+const computer = {
+    x: canvas.width - paddleWidth,
+    y: (canvas.height / 2 - paddleHeight / 2) / 4,
+    width: paddleWidth,
+    height: paddleHeight / 4,
+    speed: 3,
+    color: "red",
+    name: "Devs",
+    src: "/Bosses/DorkMind2.png"
+};
+// Define the levels
+const levels = [
+    { name: "Whispy Woods", color: "green", src: "/Development/kir-bong/Bosses/WhispyWoods.png", ballSpeedX: 1, ballSpeedY: 1, computerSpeed: 1 },
+    { name: "Waddle Dee", color: "blue", src: "/Development/kir-bong/Bosses/WaddleDee.png", ballSpeedX: 1.5, ballSpeedY: 1.5, computerSpeed: 1.5 },
+    { name: "Waddle Doo", color: "orange", src: "/Development/kir-bong/Bosses/WaddleDoo.png", ballSpeedX: 2, ballSpeedY: 2, computerSpeed: 2 },
+    { name: "King Dedede", color: "blue", src: "/Development/kir-bong/Bosses/KingDedede.png", ballSpeedX: 2.5, ballSpeedY: 2.5, computerSpeed: 2.5 },
+    { name: "Marx", color: "purple", src: "/Development/kir-bong/Bosses/Marx.png", ballSpeedX: 3, ballSpeedY: 3, computerSpeed: 3 },
+    { name: "Miracle Matter", color: "grey", src: "/Development/kir-bong/Bosses/MiracleMatter.png", ballSpeedX: 3.5, ballSpeedY: 3.5, computerSpeed: 3.5 },
+    { name: "Dark Matter", color: "black", src: "/Development/kir-bong/Bosses/DarkMatter.png", ballSpeedX: 4, ballSpeedY: 4, computerSpeed: 4 },
+    { name: "0 2", color: "white", src: "/Development/kir-bong/Bosses/02.png", ballSpeedX: 4.5, ballSpeedY: 4.5, computerSpeed: 4.5 },
+    { name: "Dark Mind", color: "purple", src: "/Development/kir-bong/Bosses/DorkMind.png", ballSpeedX: 5, ballSpeedY: 5, computerSpeed: 5 },
+    { name: "Marx", color: "red", src: "/Development/kir-bong/Bosses/Marx2.png", ballSpeedX: 5.5, ballSpeedY: 5.5, computerSpeed: 5.5 },
+    { name: "Whispy Woods", src: "/Development/kir-bong/Bosses/WhispyWoods2.png", color: "black", ballSpeedX: 6, ballSpeedY: 6, computerSpeed: 6 },
+];
 let currentSongIndex = 0;
-
+let currentLevel = 0;
 // Add an event listener to the "Start Game" button
 document.getElementById("startButton").addEventListener("click", () => {
     // Show the menu when the button is clicked
@@ -76,16 +93,27 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleRestart);
 });
 
+function initializeLevel(level) {
+    // Set game parameters based on the current level
+    ball.speedX = levels[level].ballSpeedX;
+    ball.speedY = levels[level].ballSpeedY;
+    computer.speed = levels[level].computerSpeed;
+    computer.color = levels[level].color;
+    // Update the computer's image source based on the level
+    computer.name = levels[level].name;
+    computer.src = levels[level].src;
+    // computer.height = levels[level].paddleSize;
+    // You can update other game parameters here as well
+    // Get a reference to the computerName image element by its ID
+    const computerNameImage = document.getElementById("computerName");
+    // Change the src attribute to the new image source
+    computerNameImage.src = computer.src;
+    console.log(computerNameImage.src);
+}
 // Function to update the player's name display
 function updatePlayerNameDisplay() {
     const playerName = document.getElementById("playerName");
     playerName.src = "/MC/Kirbo3.png"; // Update the image source
-}
-
-// Function to update the computer's name display
-function updateComputerNameDisplay() {
-    const computerName = document.getElementById("computerName");
-    computerName.src = "/Bosses/DorkMind3.png"; // Update the image source
 }
 
 // Start playing the background music
@@ -166,6 +194,7 @@ function restartGame() {
 
 function handleRKey(event) {
     if (event.key === "r" || event.key === "R") {
+        rPressed = true;
         restartGame();
     }
 };
@@ -199,11 +228,28 @@ function drawGameElements() {
     // Draw the computer's score
     ctx.fillStyle = "#000000"; // Set the fill color (white)
     ctx.font = "24px Arial"; // Set the font size and style
-    ctx.fillText("Dark Mind: " + computerScore, canvas.width - 180, 30);
+    ctx.fillText(levels[currentLevel].name+ ": " + computerScore, canvas.width - 180, 30);
 }
 
 
 function updateGameLogic() {
+    console.log(levels.length);
+     // Check if the player reached the score limit for the current level
+     if (playerScore >= scoreLimit) {
+        // Increment the level
+        currentLevel++;
+        if (currentLevel < levels.length) {
+            // Initialize the next level
+            playerScore = 0;
+            initializeLevel(currentLevel);
+        } else {
+            // Player has completed all levels, handle game completion
+            handleGameCompletion("Kirby");
+        }
+    } else if (computerScore >= scoreLimit) {
+        handleGameOver(levels[currentLevel].name);
+    }
+    
     // Update paddles based on player input
     if (upPressed) {
         // Move the paddle up
@@ -276,11 +322,6 @@ function updateGameLogic() {
         resetBall();
     }
 
-    // Check for game over conditions
-    if (playerScore >= scoreLimit || computerScore >= scoreLimit) {
-        gameIsRunning = false;
-    }
-
     // Restart game when pressing the R key
     if (rPressed) {
         // Restart game
@@ -307,40 +348,27 @@ function gameLoop(timestamp) {
     // Check for game over conditions and handle them
     if (gameIsRunning) {
         requestAnimationFrame(gameLoop); // Request the next frame
-    } else {
-        // Game over logic (e.g., display a message, allow restart)
-        // Check for a winner
-        if (playerScore >= scoreLimit) {
-            // Player wins
-            gameIsRunning = false; // End the game
-            handleGameOver("Kirby"); // Display winner message
-        } else if (computerScore >= scoreLimit) {
-            // Computer wins
-            gameIsRunning = false; // End the game
-            handleGameOver("Dark Mind"); // Display winner message
-        }
     }
 }
-
-function setupGameAfterImageLoad() {
-    initializeGame(); // Call the initialization function
-    requestAnimationFrame(gameLoop); // Start the game loop
-}
-
-// Function to set up the game when the ball image is loaded
-function setupGameAfterImageLoad() {
-    initializeGame(); // Call the initialization function
-    requestAnimationFrame(gameLoop); // Start the game loop
-}
-
 // Function to display the winner
 function displayWinner(winner) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#000000";
     ctx.font = "36px Arial";
     ctx.fillText("Game Over", canvas.width / 2 - 80, canvas.height / 2 - 50);
     ctx.fillText(winner + " wins!", canvas.width / 2 - 80, canvas.height / 2);
     ctx.font = "24px Arial";
     ctx.fillText("Press 'R' to restart", canvas.width / 2 - 80, canvas.height / 2 + 50);
+}
+
+function handleGameCompletion(winner) {
+    // Game completion logic (e.g., display a victory message)
+    // stopBackgroundMusic();
+    gameOver = true; // Set the game over flag
+    displayWinner(winner); // Display "Game Over" message
+    gameIsRunning = false; // Stop the game
+    canvas.style.display = "none"; // Hide the canvas
+    menu.style.display = "block"; // Show the menu
 }
 
 function handleGameOver(winner) {
@@ -354,9 +382,11 @@ function handleGameOver(winner) {
 
 function handleRestart(event) {
     if (event.key === "r" || event.key === "R") {
+        rPressed = true;
         restartGame();
     }
 }
+
 
 startButton.addEventListener("click", () => {
     console.log("Start button clicked"); // Add this line
