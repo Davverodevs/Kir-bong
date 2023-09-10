@@ -3,6 +3,7 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
+-Add different paddle sizes for each boss
 -Make restart button work after a game over
 -Add a VS icon between the player images (at the top of the screen)
 -Add to Welcome Menu
