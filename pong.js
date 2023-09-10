@@ -23,7 +23,6 @@ const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
 const playButton = document.getElementById("playButton");
-const stopButton = document.getElementById("stopButton");
 const ball = {
     x: canvas.width / 2,
     y: canvas.height / 2,
@@ -42,12 +41,26 @@ const player = {
 };
 const computer = {
     x: canvas.width - paddleWidth,
-    y: (canvas.height / 2 - paddleHeight / 2) / 3,
+    y: (canvas.height / 2 - paddleHeight / 2),
     width: paddleWidth,
-    height: paddleHeight * 3,
+    height: paddleHeight,
     speed: 3,
     color: "red"
 };
+const songs = [
+    document.getElementById("ng1"),
+    document.getElementById("ng2"),
+    document.getElementById("ng3"),
+    document.getElementById("ng4"),
+    document.getElementById("ng5"),
+    document.getElementById("ng6"),
+    document.getElementById("ng7"),
+    document.getElementById("ng8"),
+    document.getElementById("ng9"),
+    document.getElementById("ng10"),
+    // Add more audio elements for additional songs as needed
+];
+let currentSongIndex = 0;
 
 // Add an event listener to the "Start Game" button
 document.getElementById("startButton").addEventListener("click", () => {
@@ -76,24 +89,12 @@ instructionsButton.addEventListener("click", () => {
 });
 
 playButton.addEventListener("click", () => {
-    if (backgroundMusic.paused) {
-        backgroundMusic.play().catch(error => {
-            console.error("Error playing music:", error);
-        });
-    }
-});
-
-stopButton.addEventListener("click", () => {
-    backgroundMusic.pause();
-    backgroundMusic.currentTime = 0;
+    switchToNextSong();
 });
 
 // Initially, hide the game canvas and show the menu
 canvas.style.display = "none";
 menu.style.display = "block";
-
-// Set the volume to a value between 0 (muted) and 1 (full volume)
-backgroundMusic.volume = 0.5; // Adjust the value as needed
 
 // Function to update the player's name display
 function updatePlayerNameDisplay() {
@@ -109,7 +110,21 @@ function updateComputerNameDisplay() {
 
 // Start playing the background music
 function playBackgroundMusic() {
-    backgroundMusic.play();
+    songs[currentSongIndex].play().catch(error => {
+        console.error("Error playing music:", error);
+    });
+}
+
+function switchToNextSong() {
+    // Pause the current song
+    songs[currentSongIndex].pause();
+    songs[currentSongIndex].currentTime = 0; // Reset playback to the beginning
+
+    // Increment the current song index or loop back to the first song
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+
+    // Play the new current song
+    playBackgroundMusic();
 }
 
 // Stop the background music
@@ -195,6 +210,8 @@ function drawGameElements() {
     ctx.fillText("Kirby: " + playerScore, 20, 30);
 
     // Draw the computer's score
+    ctx.fillStyle = "#000000"; // Set the fill color (white)
+    ctx.font = "24px Arial"; // Set the font size and style
     ctx.fillText("Dark Mind: " + computerScore, canvas.width - 180, 30);
 }
 
@@ -294,11 +311,11 @@ function gameLoop(timestamp) {
     // Clear the canvas to prepare for the next frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Update game logic (e.g., move paddles, update ball position)
-    updateGameLogic();
-
     // Draw game elements (paddles, ball, etc.)
     drawGameElements()
+
+    // Update game logic (e.g., move paddles, update ball position)
+    updateGameLogic();
 
     // Check for game over conditions and handle them
     if (gameIsRunning) {
@@ -352,9 +369,5 @@ function handleRestart(event) {
     }
 }
 
-// // Assign the setup function to the image's onload event
-// ball.onload = setupGameAfterImageLoad;
-
-// playBackgroundMusic();
 // Start the game loop when the game begins
 gameLoop(0); // Pass 0 as the initial timestamp
