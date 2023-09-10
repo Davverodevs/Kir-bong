@@ -3,14 +3,15 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
--Add more Music buttons/options
+-Make that when a song ends the next one starts playing
 -Make restart button work after a game over
+-Add a VS icon between the player images (at the top of the screen)
 -Add to Welcome Menu
   -Single Player option
   -Multiplayer option
   -Change Settings
   -Languages (en, es, fr, de, it?, pt?, ...?)
--Add +9 levels (one for each boss with its artwork)
+-Add +9 levels (one for each boss with its artwork) (WIP)
 
 Nice to have:
 -Abilities for each character 
@@ -28,4 +29,3 @@ Nice to have:
   -Slow Ball
   -Fast Paddle
   -Slow Paddle
--1 song per boss/level?
