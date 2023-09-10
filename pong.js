@@ -189,13 +189,19 @@ function drawGameElements() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw the player's paddle
-    ctx.fillStyle = player.color; // Set the fill color (green)
+    // Draw the player's paddle with a border
+    ctx.fillStyle = player.color; // Set the fill color
     ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.strokeStyle = "black"; // Set the border color
+    ctx.lineWidth = 2; // Set the border width
+    ctx.strokeRect(player.x, player.y, player.width, player.height); // Draw the border
 
-    // Draw the computer's paddle
-    ctx.fillStyle = computer.color; // Set the fill color (red)
-    ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
+     // Draw the computer's paddle with a border
+     ctx.fillStyle = computer.color; // Set the fill color
+     ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
+     ctx.strokeStyle = "black"; // Set the border color
+     ctx.lineWidth = 2; // Set the border width
+     ctx.strokeRect(computer.x, computer.y, computer.width, computer.height); // Draw the border
 
     // Draw the ball as a filled circle
     ctx.beginPath();
