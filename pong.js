@@ -75,27 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleRestart);
 });
 
-startButton.addEventListener("click", () => {
-    console.log("Start button clicked"); // Add this line
-    // Start the game when the "Start Game" button is clicked
-    canvas.style.display = "block";
-    menu.style.display = "none";
-    initializeGame(); // Start the game logic
-});
-
-instructionsButton.addEventListener("click", () => {
-    // Display game instructions when the "Instructions" button is clicked
-    alert("just have fun :)");
-});
-
-playButton.addEventListener("click", () => {
-    switchToNextSong();
-});
-
-// Initially, hide the game canvas and show the menu
-canvas.style.display = "none";
-menu.style.display = "block";
-
 // Function to update the player's name display
 function updatePlayerNameDisplay() {
     const playerName = document.getElementById("playerName");
@@ -115,16 +94,21 @@ function playBackgroundMusic() {
     });
 }
 
-function switchToNextSong() {
-    // Pause the current song
-    songs[currentSongIndex].pause();
-    songs[currentSongIndex].currentTime = 0; // Reset playback to the beginning
-
+function handleAudioEnded() {
     // Increment the current song index or loop back to the first song
     currentSongIndex = (currentSongIndex + 1) % songs.length;
 
     // Play the new current song
     playBackgroundMusic();
+}
+
+function switchToNextSong() {
+    // Pause the current song
+    songs[currentSongIndex].pause();
+    songs[currentSongIndex].currentTime = 0; // Reset playback to the beginning
+
+    // Call the handleAudioEnded function to switch to the next song
+    handleAudioEnded();
 }
 
 // Stop the background music
@@ -374,6 +358,34 @@ function handleRestart(event) {
         gameIsRunning = true
     }
 }
+
+startButton.addEventListener("click", () => {
+    console.log("Start button clicked"); // Add this line
+    // Start the game when the "Start Game" button is clicked
+    canvas.style.display = "block";
+    menu.style.display = "none";
+    initializeGame(); // Start the game logic
+});
+
+instructionsButton.addEventListener("click", () => {
+    // Display game instructions when the "Instructions" button is clicked
+    alert("just have fun :)");
+});
+
+playButton.addEventListener("click", () => {
+    switchToNextSong();
+});
+
+// Initially, hide the game canvas and show the menu
+canvas.style.display = "none";
+menu.style.display = "block";
+
+songs.forEach((song, index) => {
+    song.addEventListener("ended", handleAudioEnded);
+
+    // Set a custom attribute to store the index of each song
+    song.setAttribute("data-song-index", index);
+});
 
 // Start the game loop when the game begins
 gameLoop(0); // Pass 0 as the initial timestamp
