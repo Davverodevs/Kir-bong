@@ -10,7 +10,6 @@ TODO:
   -Multiplayer option
   -Change Settings
   -Languages (en, es, fr, de, it?, pt?, ...?)
--Add +9 levels (one for each boss with its artwork) (WIP)
 
 Nice to have:
 -Abilities for each character 
