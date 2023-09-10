@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kir-bong</title>
+    <title>Kir-bong!</title>
     <style>
         /* Add this style to hide the menu by default */
         #menu {
@@ -35,16 +35,63 @@
             display: flex; /* Use flexbox to control layout */
             justify-content: space-between; /* Space items evenly in the container */
             padding: 0px 550px; /* Add padding as needed */
+            z-index: -1;
         }
         /* Style for the image */
         .left-image {
             /* Remove margin-left and adjust width as needed */
             width: 50px; /* Adjust the width as needed */
+            z-index: -1;
         }
         /* Style for the image */
         .right-image {
             /* Remove margin-left and adjust width as needed */
             width: 50px; /* Adjust the width as needed */
+            z-index: -1;
+        }
+        /* Style for the menu container */
+        .menu-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%; /* Set the width to 100% of the viewport width */
+            height: 100%; /* Set the height to 100% of the viewport height */
+            color: pink;
+            text-align: center;
+            background-color: #333; /* Add a semi-transparent background color */
+            display: flex; /* Use flexbox for centering content vertically and horizontally */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            border-radius: 10px;
+            margin: 0 auto;
+            z-index: 1; /* Set a higher z-index to ensure it's on top */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+        /* Style for the menu title */
+        .menu-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        /* Style for the menu buttons */
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Spacing between buttons */
+        }
+        /* Style for individual menu buttons */
+        .menu-button {
+            background-color: #007bff; /* Button background color */
+            color: white; /* Button text color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+        }
+        /* Hover effect for buttons */
+        .menu-button:hover {
+            background-color: #0056b3; /* Darker background on hover */
         }
     </style>
 </head>
@@ -60,33 +107,32 @@
     <audio id="ng8" src="BGM/ng8.mp3"></audio>
     <audio id="ng9" src="BGM/ng9.mp3"></audio>
     <audio id="ng10" src="BGM/ng10.mp3"></audio>
+    <audio id="ng11" src="BGM/ng11.mp3"></audio>
+    <audio id="ng12" src="BGM/ng12.mp3"></audio>
+    <audio id="ng13" src="BGM/ng13.mp3"></audio>
+    <audio id="ng14" src="BGM/ng14.mp3"></audio>
     <!-- Add more audio elements with different IDs and src attributes for additional songs as needed -->
-
+    <img id="topImage" src="VS50.png" alt="Top Image" style="position: absolute; top: 10; left: 50%; transform: translateX(-50%); z-index: 1;">
     <!-- Your game content goes here -->
     <canvas id="gameCanvas" width="1250" height="500"></canvas>
-    <div id="menu">
-        <h1>kir-bong</h1>
-        <button id="startButton">Start Game</button>
-        <button id="instructionsButton">Instructions</button>
-    </div>
-
     <img id="ballImage" src="Balls/ball2.png" alt="Ball Image" style="display: none;">
-
     <!-- Replace the player and computer name elements with img tags -->
     <div class="image-container">
-        <img class="left-image"id="playerName" src="MC/Kirbo3.png" alt="Player Name" />
-        <img class="right-image" id="computerName" src="Bosses/WaddleDee.png" alt="Computer Name" />
+        <img class="left-image" id="playerName" src="MC/Kirbo3.png" alt="Player Name" />
+        <img class="right-image" id="computerName" src="Bosses/WhispyWoods.png" alt="Computer Name" />
     </div>
-
     <button id="playButton" class="bottom-right-button">Play Next Song</button>
-
+    <div class="menu-container" id="menu">
+        <h1>Kir-bong!</h1>
+        <button class="menu-button" id="startButton">Start Game</button>
+        <button class="menu-button" id="instructionsButton">Instructions</button>
+    </div>
     <!-- Include your JavaScript file here -->
     <script src="pong.js"></script>
     <script>
         // Your JavaScript code here
         const backgroundMusic = document.getElementById("backgroundMusic");
         const playButton = document.getElementById("playButton");
-
         playButton.addEventListener("click", () => {
             switchToNextSong();
         });
