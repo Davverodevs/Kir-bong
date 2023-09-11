@@ -4,11 +4,10 @@ Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
 -Add different paddle sizes for each boss?
--Make restart button work after a game over
 -Make Welcome Menu cuter and give it more functions
 -Add to Welcome Menu
-  -Single Player option
-  -Multiplayer option
+  -Single Player option (Story mode)
+  -Multiplayer option (Party mode)
   -Change Settings 
     -Difficulty (easy, normal, hard, insane?)
     -Languages (en, es, fr, de, it?, pt?, ...?)
