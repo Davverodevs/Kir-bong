@@ -91,6 +91,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
 });
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+}
 function initializeLevel(level) {
     // Set game parameters based on the current level
     ball.speedX = levels[level].ballSpeedX;
@@ -136,7 +142,6 @@ function stopBackgroundMusic() {
     backgroundMusic.currentTime = 0; // Reset playback to the beginning
 }
 function initializeGame() {
-    // Your game initialization code here
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
     ball.radius = 10;
@@ -337,5 +342,7 @@ songs.forEach((song, index) => {
     // Set a custom attribute to store the index of each song
     song.setAttribute("data-song-index", index);
 });
+// Shuffle the songs array
+shuffleArray(songs);
 // Start the game loop when the game begins
 gameLoop(0); // Pass 0 as the initial timestamp
