@@ -8,7 +8,6 @@ let winner = "";
 let upPressed = false;
 let downPressed = false;
 let gameOver = false;
-let rPressed = false;
 // Get references to the menu and canvas elements
 const menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
@@ -91,7 +90,6 @@ document.getElementById("startButton").addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
-    document.addEventListener("keydown", handleRestart);
 });
 function initializeLevel(level) {
     // Set game parameters based on the current level
@@ -127,7 +125,7 @@ function handleAudioEnded() {
 }
 function switchToNextSong() {
     // Pause the current song
-    songs[currentSongIndex].pause();
+    songs[currentSongIndex].pause();initializeGame
     songs[currentSongIndex].currentTime = 0; // Reset playback to the beginning
     // Call the handleAudioEnded function to switch to the next song
     handleAudioEnded();
@@ -145,6 +143,10 @@ function initializeGame() {
     ball.speedX = initialBallSpeedX;
     ball.speedY = initialBallSpeedY;
     ball.ballColor = "pink";
+    playerScore = 0;
+    computerScore = 0;
+    gameOver = false;
+    gameIsRunning = true;
     playBackgroundMusic();
 }
 // Function to reset the ball's position after a point is scored
@@ -170,20 +172,26 @@ function handleKeyUp(event) {
         downPressed = false;
     }
 }
-function restartGame() {
-    playerScore = 0;
-    computerScore = 0;
-    resetBall(); // Reset ball position
-    gameOver = false;
-    gameIsRunning = true;
-    playBackgroundMusic();
+// Function to display the winner
+function displayWinner() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#000000";
+    ctx.font = "36px Arial";
+    ctx.fillText("Congratulations! You win!", canvas.width / 2 - 80, canvas.height / 2 - 50);
+    ctx.fillText("Thanks for playing!", canvas.width / 2 - 80, canvas.height / 2);
 }
-function handleRKey(event) {
-    if (event.key === "r" || event.key === "R") {
-        rPressed = true;
-        restartGame();
-    }
-};
+function handleGameCompletion() {
+    // Game completion logic (e.g., display a victory message)
+    gameOver = true; // Set the game over flag
+    displayWinner(); // Display "Game Over" message
+    gameIsRunning = false; // Stop the game
+    // canvas.style.display = "none"; // Hide the canvas
+    // menu.style.display = "block"; // Show the menu
+}
+function handleGameOver() {
+    canvas.style.display = "none"; // Hide the canvas
+    menu.style.display = "block"; // Show the menu
+}
 function drawGameElements() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -290,11 +298,6 @@ function updateGameLogic() {
         // Reset the ball's position
         resetBall();
     }
-    // Restart game when pressing the R key
-    if (rPressed) {
-        // Restart game
-        restartGame();
-    } 
     // Other game logic...
 }
 function gameLoop(timestamp) {
@@ -312,40 +315,12 @@ function gameLoop(timestamp) {
         requestAnimationFrame(gameLoop); // Request the next frame
     }
 }
-// Function to display the winner
-function displayWinner(winner) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#000000";
-    ctx.font = "36px Arial";
-    ctx.fillText("Game Over", canvas.width / 2 - 80, canvas.height / 2 - 50);
-    ctx.fillText(winner + " has defeated Kirby!", canvas.width / 2 - 80, canvas.height / 2);
-}
-function handleGameCompletion(winner) {
-    // Game completion logic (e.g., display a victory message)
-    gameOver = true; // Set the game over flag
-    displayWinner(winner); // Display "Game Over" message
-    gameIsRunning = false; // Stop the game
-    canvas.style.display = "none"; // Hide the canvas
-    menu.style.display = "block"; // Show the menu
-}
-function handleGameOver(winner) {
-    gameOver = true; // Set the game over flag
-    displayWinner(winner); // Display "Game Over" message
-    gameIsRunning = false; // Stop the game
-    canvas.style.display = "none"; // Hide the canvas
-    menu.style.display = "block"; // Show the menu
-}
-function handleRestart(event) {
-    if (event.key === "r" || event.key === "R") {
-        rPressed = true;
-        restartGame();
-    }
-}
 startButton.addEventListener("click", () => {
     // Start the game when the "Start Game" button is clicked
     canvas.style.display = "block";
     menu.style.display = "none";
     initializeGame(); // Start the game logic
+    gameIsRunning = true; // Set the game to running state
 });
 instructionsButton.addEventListener("click", () => {
     // Display game instructions when the "Instructions" button is clicked
