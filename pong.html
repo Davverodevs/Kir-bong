@@ -77,6 +77,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px; /* Spacing between buttons */
+            align-items: center;
         }
         /* Style for individual menu buttons */
         .menu-button {
@@ -87,6 +88,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 18px;
+            margin: 10px;
             transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
         }
         /* Hover effect for buttons */
@@ -124,7 +126,8 @@
     <button id="playButton" class="bottom-right-button">Play Next Song</button>
     <div class="menu-container" id="menu">
         <h1>Kir-bong!</h1>
-        <button class="menu-button" id="startButton">Start Game</button>
+        <button class="menu-button" id="startButton">Story Mode</button>
+        <button class="menu-button" id="twoPlayerButton">Party Mode (WIP)</button>
         <button class="menu-button" id="instructionsButton">Instructions</button>
     </div>
     <!-- Include your JavaScript file here -->

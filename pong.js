@@ -13,6 +13,8 @@ const menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
 // Add event listeners for the menu buttons
 const startButton = document.getElementById("startButton");
+// Add an event listener for the "2 Player" button
+const twoPlayerButton = document.getElementById("twoPlayerButton");
 const instructionsButton = document.getElementById("instructionsButton");
 const scoreLimit = 3; // Set a score limit for winning the game (adjust as needed)
 const initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
@@ -326,6 +328,10 @@ startButton.addEventListener("click", () => {
     menu.style.display = "none";
     initializeGame(); // Start the game logic
     gameIsRunning = true; // Set the game to running state
+});
+twoPlayerButton.addEventListener("click", () => {
+    // Start a 2-player game when the "2 Player" button is clicked
+    // startTwoPlayerGame(); WIP
 });
 instructionsButton.addEventListener("click", () => {
     // Display game instructions when the "Instructions" button is clicked
