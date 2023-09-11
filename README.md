@@ -16,12 +16,10 @@ TODO:
 Nice to have:
 -Abilities for each character?
   -Multiple balls
-  -Multiple paddles
   -Large ball
   -Small ball
   -Paddle-destroyer ball
   -Invisible ball
-  -Ghost ball (goes through paddles)
   -Unbreakable paddle
   -Large Paddle
   -Mini Paddle
