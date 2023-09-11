@@ -144,6 +144,7 @@ function stopBackgroundMusic() {
     backgroundMusic.currentTime = 0; // Reset playback to the beginning
 }
 function initializeGame() {
+    initializeLevel(currentLevel)
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
     ball.radius = 10;
