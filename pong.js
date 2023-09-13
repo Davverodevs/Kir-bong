@@ -1,13 +1,3 @@
-let lastTime = 0; // Used to calculate time elapsed between frames
-let deltaTime = 0; // Time elapsed since the last frame
-let gameIsRunning = true; // A flag to control the game state
-let playerScore = 0;
-let computerScore = 0;
-let winner = "";
-// Define variables to track player input
-let upPressed = false;
-let downPressed = false;
-let gameOver = false;
 // Get references to the menu and canvas elements
 const menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
@@ -54,8 +44,7 @@ const songs = [
     document.getElementById("ng11"),
     document.getElementById("ng12"),
     document.getElementById("ng13"),
-    document.getElementById("ng14"),
-    // Add more audio elements for additional songs as needed
+    document.getElementById("ng14")
 ];
 const computer = {
     x: canvas.width - paddleWidth,
@@ -83,6 +72,17 @@ const levels = [
 ];
 let currentSongIndex = 0;
 let currentLevel = 0;
+let lastTime = 0; // Used to calculate time elapsed between frames
+let deltaTime = 0; // Time elapsed since the last frame
+let isGameRunning = true; // A flag to control the game state
+let playerScore = 0;
+let computerScore = 0;
+let winner = "";
+// Define variables to track player input
+let upPressed = false;
+let downPressed = false;
+let isGameOver = false;
+let gameIsPaused = false; // Track whether the game is currently paused
 // Add an event listener to the "Start Game" button
 document.getElementById("startButton").addEventListener("click", () => {
     // Show the menu when the button is clicked
@@ -93,6 +93,68 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
 });
+function stopGameProcesses() {
+    // Pause any ongoing animations or timers
+    cancelAnimationFrame(animationFrameId); // Stop the game loop
+    // Stop any other ongoing processes or animations in your game
+    // For example, if you have any setTimeout or setInterval timers, clear them here
+    clearInterval(timerId);
+    // You can add more logic to stop other game-related processes as needed
+}
+// Function to pause the game
+function pauseGame() {
+    gameIsPaused = true;
+    // Display a pause menu or screen (you can create a div element for this)
+    const pauseMenu = document.getElementById("pauseMenu");
+    pauseMenu.style.display = "block";
+    // Stop any game-related processes (e.g., stop updating game logic)
+    stopGameProcesses();
+}
+function startGameProcesses() {
+    // Resume the game loop
+    requestAnimationFrame(gameLoop);
+    // Restart any other timers or processes that were paused
+    // For example, if you have any setTimeout or setInterval timers, start them again
+    timerId = setInterval(updateGameLogic, interval); // Replace with your specific timers
+    // You can add more logic to resume other game-related processes as needed
+}
+// Function to resume the game
+function resumeGame() {
+    gameIsPaused = false;
+    // Hide the pause menu or screen
+    const pauseMenu = document.getElementById("pauseMenu");
+    pauseMenu.style.display = "none";
+    // Resume game-related processes (e.g., resume updating game logic)
+    startGameProcesses();
+}
+// Function to handle the pause/resume action when the pause button is clicked
+function togglePause() {
+    if (gameIsPaused) {
+        resumeGame();
+    } else {
+        pauseGame();
+    }
+}
+// Add an event listener to a pause button or keyboard shortcut
+document.addEventListener("keydown", function (event) {
+    if (event.key === "p" || event.key === "P") {
+        togglePause();
+        // alert("that the game is now paused");
+    }
+});
+function randomizeDirection() {
+    // Generate a random number between -1 and 1
+    const randomX = Math.random() * 2 - 1;
+    const randomY = Math.random() * 2 - 1;
+  
+    // Normalize the vector (X and Y components) to maintain constant speed
+    const length = Math.sqrt(randomX * randomX + randomY * randomY);
+    const speed = 1; // Adjust this value to control the ball's speed
+    const speedX = (randomX / length) * speed;
+    const speedY = (randomY / length) * speed;
+  
+    return { speedX, speedY };
+}
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -153,16 +215,17 @@ function initializeGame() {
     ball.ballColor = "pink";
     playerScore = 0;
     computerScore = 0;
-    gameOver = false;
-    gameIsRunning = true;
+    isGameOver = false;
+    isGameRunning = true;
     playBackgroundMusic();
 }
 // Function to reset the ball's position after a point is scored
 function resetBall() {
+    const { speedX, speedY } = randomizeDirection();
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
-    ball.speedX = initialBallSpeedX; // Set initial speed
-    ball.speedY = initialBallSpeedY; // Set initial speed
+    ball.speedX = speedX; // Set initial speed
+    ball.speedY = speedY; // Set initial speed
 }
 // Function to handle keydown events
 function handleKeyDown(event) {
@@ -190,9 +253,9 @@ function displayWinner() {
 }
 function handleGameCompletion() {
     // Game completion logic (e.g., display a victory message)
-    gameOver = true; // Set the game over flag
+    isGameOver = true; // Set the game over flag
     displayWinner(); // Display "Game Over" message
-    gameIsRunning = false; // Stop the game
+    isGameRunning = false; // Stop the game
     // canvas.style.display = "none"; // Hide the canvas
     // menu.style.display = "block"; // Show the menu
 }
@@ -308,19 +371,22 @@ function updateGameLogic() {
     }
     // Other game logic...
 }
-function gameLoop(timestamp) {
+function runGameLoop(timestamp) {
     // Calculate deltaTime (time elapsed since the last frame)
     deltaTime = timestamp - lastTime;
     lastTime = timestamp;
     // Clear the canvas to prepare for the next frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Draw game elements (paddles, ball, etc.)
-    drawGameElements()
-    // Update game logic (e.g., move paddles, update ball position)
-    updateGameLogic();
+    if (!gameIsPaused) {
+        // Update game logic only if the game is not paused
+        // Draw game elements (paddles, ball, etc.)
+        drawGameElements()
+        // Update game logic (e.g., move paddles, update ball position)
+        updateGameLogic();
+    }
     // Check for game over conditions and handle them
-    if (gameIsRunning) {
-        requestAnimationFrame(gameLoop); // Request the next frame
+    if (isGameRunning) {
+        requestAnimationFrame(runGameLoop); // Request the next frame
     }
 }
 startButton.addEventListener("click", () => {
@@ -328,7 +394,7 @@ startButton.addEventListener("click", () => {
     canvas.style.display = "block";
     menu.style.display = "none";
     initializeGame(); // Start the game logic
-    gameIsRunning = true; // Set the game to running state
+    isGameRunning = true; // Set the game to running state
 });
 twoPlayerButton.addEventListener("click", () => {
     // Start a 2-player game when the "2 Player" button is clicked
@@ -352,4 +418,4 @@ songs.forEach((song, index) => {
 // Shuffle the songs array
 shuffleArray(songs);
 // Start the game loop when the game begins
-gameLoop(0); // Pass 0 as the initial timestamp
+runGameLoop(0); // Pass 0 as the initial timestamp
