@@ -4,7 +4,8 @@ Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
 -Add different paddle sizes for each boss?
--Make Welcome Menu cuter and give it more functions
+-Make Welcome Menu cuter and give it more functions (WIP)
+-Make Menu Buttons display vertically and centered
 -Elaborate more on "Story Mode"
 -Add to Welcome Menu
   -Multiplayer option (Party mode)
@@ -15,12 +16,10 @@ TODO:
 Nice to have:
 -Abilities for each character?
   -Multiple balls
-  -Multiple paddles
   -Large ball
   -Small ball
   -Paddle-destroyer ball
   -Invisible ball
-  -Ghost ball (goes through paddles)
   -Unbreakable paddle
   -Large Paddle
   -Mini Paddle
