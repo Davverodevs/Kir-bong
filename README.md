@@ -3,6 +3,8 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
+-Change mechanics of how kirby ball bounces to paddles?
+-Change movements of enemy paddles?
 -Add different paddle sizes for each boss?
 -Make Welcome Menu cuter and give it more functions (WIP)!!!
 -Make Menu Buttons display vertically and centered
