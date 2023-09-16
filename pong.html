@@ -110,6 +110,18 @@
             margin: 3px;
             transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
         }
+        .pause-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+            display: none; /* Initially hide the message */
+            z-index: 1000; /* Ensure it's displayed on top */
+        }
     </style>
 </head>
 <body>
@@ -141,6 +153,7 @@
         <button class="button" id="PlayNextSongButton" >Play Next Song</button>
         <button class="button" id="restartButton" >Restart Game</button>
     </div>
+    <div id="pauseMessage" class="pause-message"> Game Paused </div>
     <div class="menu-container" id="menu">
         <h1>Kir-bong!</h1>
         <button class="menu-button" id="startButton">Story Mode</button>

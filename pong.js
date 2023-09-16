@@ -173,11 +173,26 @@ function togglePause() {
         pauseGame();
     }
 }
+// Function to show the pause message
+function showPauseMessage() {
+    const pauseMessage = document.getElementById("pauseMessage");
+    pauseMessage.style.display = "block";
+}
+function hidePauseMessage() {
+    const pauseMessage = document.getElementById("pauseMessage");
+    pauseMessage.style.display = "none";
+}
 // Add an event listener to a pause button or keyboard shortcut
 document.addEventListener("keydown", function (event) {
     if (event.key === "p" || event.key === "P") {
-        togglePause();
-        // alert("that the game is now paused");
+        if (isGameRunning && !gameIsPaused) {
+            showPauseMessage(); 
+            togglePause(); // Pause the game
+        } else if (isGameRunning && gameIsPaused) {
+            
+            hidePauseMessage();
+            togglePause();
+        }
     }
 });
 function randomizeDirection() {
