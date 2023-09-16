@@ -4,15 +4,13 @@ Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
 -Make Welcome Menu cuter and give it more functions (WIP)!!!
--Add Pause & Restart buttons
--Add screen when game is paused
 -Make Menu Buttons display vertically and centered
 -Add to Welcome Menu
   -Multiplayer option (Party mode)!!!
   -Change Settings 
     -Difficulty (easy, normal, hard, insane?)!!!
     -Languages (en, es, fr, de, it?, pt?, ...?)
--Elaborate more on "Story Mode"
+-Elaborate more on "Story Mode"?
 
 Nice to have:
 -Abilities for each character?
