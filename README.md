@@ -11,13 +11,12 @@ TODO:
     -Difficulty (easy, normal, hard, insane?)!!!
     -Languages (en, es, fr, de, it?, pt?, ...?)
 -Elaborate more on "Story Mode"
--Change movements of enemy paddles!
-  -They seem to play unfairly good
--Add different paddle sizes for each boss?
 -Change mechanics of how kirby ball bounces to paddles?
   - Edge of paddle could alter direction of ball
 
 Nice to have:
+-Add a different background for each boss?
+-Add different paddle sizes for each boss?
 -Abilities for each character?
   -Multiple balls
   -Large ball
@@ -31,3 +30,4 @@ Nice to have:
   -Slow Ball
   -Fast Paddle
   -Slow Paddle
+
