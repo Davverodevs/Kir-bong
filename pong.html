@@ -122,7 +122,7 @@
         <img class="left-image" id="playerName" src="MC/Kirbo.png" alt="Player Name" />
         <img class="right-image" id="computerName" src="Bosses/WhispyWoods.png" alt="Computer Name" />
     </div>
-    <button id="playButton" class="bottom-right-button">Play Next Song</button>
+    <button id="PlayNextSongButton" class="bottom-right-button">Play Next Song</button>
     <div class="menu-container" id="menu">
         <h1>Kir-bong!</h1>
         <button class="menu-button" id="startButton">Story Mode</button>
@@ -136,8 +136,8 @@
     <script>
         // Your JavaScript code here
         const backgroundMusic = document.getElementById("backgroundMusic");
-        const playButton = document.getElementById("playButton");
-        playButton.addEventListener("click", () => {
+        const PlayNextSongButton = document.getElementById("PlayNextSongButton");
+        PlayNextSongButton.addEventListener("click", () => {
             switchToNextSong();
         });
         const twoPlayerButton = document.getElementById("twoPlayerButton");

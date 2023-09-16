@@ -13,7 +13,7 @@ const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
 const paddleHeight = 100;
-const playButton = document.getElementById("playButton");
+const PlayNextSongButton = document.getElementById("PlayNextSongButton");
 const ballImage = document.getElementById("ballImage");
 const ball = {
     x: canvas.width / 2,
@@ -88,7 +88,6 @@ let deltaTime = 0; // Time elapsed since the last frame
 let isGameRunning = true; // A flag to control the game state
 let playerScore = 0;
 let computerScore = 0;
-let winner = "";
 // Define variables to track player input
 let upPressed = false;
 let downPressed = false;
@@ -295,8 +294,6 @@ function handleGameCompletion() {
     isGameOver = true; // Set the game over flag
     displayWinner(); // Display "Game Over" message
     isGameRunning = false; // Stop the game
-    // canvas.style.display = "none"; // Hide the canvas
-    // menu.style.display = "block"; // Show the menu
 }
 function handleGameOver() {
     canvas.style.display = "none"; // Hide the canvas
@@ -335,14 +332,13 @@ function updateGameLogic() {
         currentLevel++;
         if (currentLevel < levels.length) {
             // Initialize the next level
-            playerScore = 0;
             initializeLevel(currentLevel);
         } else {
             // Player has completed all levels, handle game completion
-            handleGameCompletion("Kirby");
+            handleGameCompletion();
         }
     } else if (computerScore >= scoreLimit) {
-        handleGameOver(levels[currentLevel].name);
+        handleGameOver();
     }
     // Update paddles based on player input
     if (upPressed) {
@@ -431,7 +427,7 @@ instructionsButton.addEventListener("click", () => {
     // Display game instructions when the "Instructions" button is clicked
     alert("just have fun :)");
 });
-playButton.addEventListener("click", () => {
+PlayNextSongButton.addEventListener("click", () => {
     switchToNextSong();
 });
 // Initially, hide the game canvas and show the menu
