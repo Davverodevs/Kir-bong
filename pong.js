@@ -244,6 +244,8 @@ function stopBackgroundMusic() {
     backgroundMusic.currentTime = 0; // Reset playback to the beginning
 }
 function initializeGame() {
+    playerScore = 0;
+    computerScore = 0;
     initializeLevel(currentLevel)
     ball.x = canvas.width / 2;
     ball.y = canvas.height / 2;
@@ -251,8 +253,6 @@ function initializeGame() {
     ball.speedX = initialBallSpeedX;
     ball.speedY = initialBallSpeedY;
     ball.ballColor = "pink";
-    playerScore = 0;
-    computerScore = 0;
     isGameOver = false;
     isGameRunning = true;
     playBackgroundMusic();
@@ -332,6 +332,7 @@ function updateGameLogic() {
         currentLevel++;
         if (currentLevel < levels.length) {
             // Initialize the next level
+            playerScore = 0;
             initializeLevel(currentLevel);
         } else {
             // Player has completed all levels, handle game completion
