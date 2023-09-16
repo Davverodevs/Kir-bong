@@ -8,7 +8,7 @@ TODO:
 -Add to Welcome Menu
   -Multiplayer option (Party mode)!!!
   -Change Settings 
-    -Difficulty (easy, normal, hard, insane?)!!!
+    -Difficulty (easy, normal, hard, insane?)!!! -> IDEA: multiply number of each level by Difficulty
     -Languages (en, es, fr, de, it?, pt?, ...?)
 -Elaborate more on "Story Mode"?
 
