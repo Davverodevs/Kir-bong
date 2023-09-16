@@ -19,17 +19,6 @@
             height: 100%;
             z-index: -3; /* Set the z-index to a negative value to place it below other elements */
         }
-        /* Style for the button */
-        .bottom-right-button {
-            position: fixed;
-            bottom: 20px; /* Adjust the distance from the bottom as needed */
-            right: 20px; /* Adjust the distance from the right as needed */
-            padding: 10px 20px; /* Adjust padding as needed */
-            background-color: #007bff; /* Button background color */
-            color: white; /* Button text color */
-            border: none; /* Remove border */
-            cursor: pointer;
-        }
         /* Style for the container holding the player and computer images */
         .image-container {
             display: flex; /* Use flexbox to control layout */
@@ -95,6 +84,32 @@
         .menu-button:hover {
             background-color: #0056b3; /* Darker background on hover */
         }
+        /* Hover effect for buttons */
+        .button:hover {
+            background-color: #0056b3; /* Darker background on hover */
+        }
+        .button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: row; /* Arrange buttons horizontally */
+            gap: 10px; /* Spacing between buttons */
+            color: white; /* Button text color */
+            border: none; /* Remove border */
+            cursor: pointer;
+        }
+        .button {
+            background-color: #007bff; /* Button background color */
+            color: white; /* Button text color */
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10px;
+            margin: 3px;
+            transition: background-color 0.2s ease-in-out; /* Smooth hover effect */
+        }
     </style>
 </head>
 <body>
@@ -122,7 +137,10 @@
         <img class="left-image" id="playerName" src="MC/Kirbo.png" alt="Player Name" />
         <img class="right-image" id="computerName" src="Bosses/WhispyWoods.png" alt="Computer Name" />
     </div>
-    <button id="PlayNextSongButton" class="bottom-right-button">Play Next Song</button>
+    <div class="button-container">
+        <button class="button" id="PlayNextSongButton" >Play Next Song</button>
+        <button class="button" id="restartButton" >Restart Game</button>
+    </div>
     <div class="menu-container" id="menu">
         <h1>Kir-bong!</h1>
         <button class="menu-button" id="startButton">Story Mode</button>

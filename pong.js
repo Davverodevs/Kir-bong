@@ -3,6 +3,8 @@ const menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
 // Add event listeners for the menu buttons
 const startButton = document.getElementById("startButton");
+// Get a reference to the restart button element
+const restartButton = document.getElementById("restartButton");
 // Add an event listener for the "2 Player" button
 const twoPlayerButton = document.getElementById("twoPlayerButton");
 const instructionsButton = document.getElementById("instructionsButton");
@@ -413,12 +415,36 @@ function runGameLoop(timestamp) {
         requestAnimationFrame(runGameLoop); // Request the next frame
     }
 }
+function hideGameOverMessage() {
+    // Get a reference to the game over message element by its ID
+    const gameOverMessage = document.getElementById("gameOverMessage"); // Replace "gameOverMessage" with your actual ID
+
+    // Check if the game over message element exists
+    if (gameOverMessage) {
+        // Hide the game over message by setting its style to "display: none;"
+        gameOverMessage.style.display = "none";
+    }
+}
 startButton.addEventListener("click", () => {
     // Start the game when the "Start Game" button is clicked
     canvas.style.display = "block";
     menu.style.display = "none";
     initializeGame(); // Start the game logic
     isGameRunning = true; // Set the game to running state
+});
+// Add an event listener to the restart button
+restartButton.addEventListener("click", () => {
+    // Call the initializeGame function to restart the game
+    initializeGame();
+    
+    // Hide the game over message if it's displayed
+    hideGameOverMessage(); // You'll need to define this function
+    
+    // Resume the game loop if it was paused
+    if (!isGameRunning) {
+        isGameRunning = true;
+        runGameLoop(0); // Pass 0 as the initial timestamp
+    }
 });
 twoPlayerButton.addEventListener("click", () => {
     // Start a 2-player game when the "2 Player" button is clicked
