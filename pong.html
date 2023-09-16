@@ -113,7 +113,6 @@
     <audio id="ng12" src="BGM/Disc A/ng12.mp3"></audio>
     <audio id="ng13" src="BGM/Disc A/ng13.mp3"></audio>
     <audio id="ng14" src="BGM/Disc A/ng14.mp3"></audio>
-    <!-- Add more audio elements with different IDs and src attributes for additional songs as needed -->
     <img id="topImage" src="VS50.png" alt="Top Image" style="position: absolute; top: 10; left: 50%; transform: translateX(-50%); z-index: 1;">
     <!-- Your game content goes here -->
     <canvas id="gameCanvas" width="1250" height="500"></canvas>
@@ -127,7 +126,7 @@
     <div class="menu-container" id="menu">
         <h1>Kir-bong!</h1>
         <button class="menu-button" id="startButton">Story Mode</button>
-        <button class="menu-button" id="twoPlayerButton">Party Mode (WIP)</button>
+        <button class="menu-button" id="twoPlayerButton">Party Mode</button>
         <button class="menu-button" id="settingsButton">Settings (WIP)</button>
         <button class="menu-button" id="languageButton">Language (WIP)</button>
         <button class="menu-button" id="instructionsButton">Instructions</button>
@@ -140,6 +139,15 @@
         const playButton = document.getElementById("playButton");
         playButton.addEventListener("click", () => {
             switchToNextSong();
+        });
+        const twoPlayerButton = document.getElementById("twoPlayerButton");
+        // Add an event listener for the two-player mode button
+        twoPlayerButton.addEventListener("click", () => {
+        // Hide the menu
+        const menu = document.getElementById("menu");
+        menu.style.display = "none";
+        // Start the two-player game
+        startTwoPlayerGame();
         });
     </script>
 </body>

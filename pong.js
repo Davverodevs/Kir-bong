@@ -22,13 +22,23 @@ const ball = {
     speedX: initialBallSpeedX,
     speedY: initialBallSpeedY,
 };
-const player = {
+// Player 1 paddle
+const player1 = {
     x: 0,
     y: canvas.height / 2 - paddleHeight / 2,
     width: paddleWidth,
     height: paddleHeight,
     speed: 1,
     color: "pink"
+};
+// Player 2 paddle
+const player2 = {
+    x: 0,
+    y: canvas.height / 2 - paddleHeight / 2,
+    width: paddleWidth,
+    height: paddleHeight,
+    speed: 1,
+    color: "sky blue"
 };
 const songs = [
     document.getElementById("ng1"),
@@ -267,11 +277,11 @@ function drawGameElements() {
     // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     // Draw the player's paddle with a border
-    ctx.fillStyle = player.color; // Set the fill color
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.fillStyle = player1.color; // Set the fill color
+    ctx.fillRect(player1.x, player1.y, player1.width, player1.height);
     ctx.strokeStyle = "black"; // Set the border color
     ctx.lineWidth = 2; // Set the border width
-    ctx.strokeRect(player.x, player.y, player.width, player.height); // Draw the border
+    ctx.strokeRect(player1.x, player1.y, player1.width, player1.height); // Draw the border
     // Draw the computer's paddle with a border
     ctx.fillStyle = computer.color; // Set the fill color
     ctx.fillRect(computer.x, computer.y, computer.width, computer.height);
@@ -287,7 +297,7 @@ function drawGameElements() {
     // Draw the computer's score
     ctx.fillStyle = "#000000"; // Set the fill color (white)
     ctx.font = "24px Arial"; // Set the font size and style
-    ctx.fillText(levels[currentLevel].name+ ": " + computerScore, canvas.width - 180, 30);
+    ctx.fillText(levels[currentLevel].name+ ": " + computerScore, canvas.width - 200, 30);
 }
 function updateGameLogic() {
      // Check if the player reached the score limit for the current level
@@ -308,16 +318,16 @@ function updateGameLogic() {
     // Update paddles based on player input
     if (upPressed) {
         // Move the paddle up
-        player.y -= player.speed * deltaTime;
+        player1.y -= player1.speed * deltaTime;
     } else if (downPressed) {
         // Move the paddle down
-        player.y += player.speed * deltaTime;
+        player1.y += player1.speed * deltaTime;
     }
     // Ensure the paddle stays within the canvas boundaries
-    if (player.y < 0) {
-        player.y = 0;
-    } else if (player.y + player.height > canvas.height) {
-        player.y = canvas.height - player.height;
+    if (player1.y < 0) {
+        player1.y = 0;
+    } else if (player1.y + player1.height > canvas.height) {
+        player1.y = canvas.height - player1.height;
     }
     // Update the computer's paddle position to track the ball
     const computerTargetY = ball.y - computer.height / 2;
@@ -337,10 +347,10 @@ function updateGameLogic() {
     ball.y += ball.speedY * deltaTime;
     // Check for collisions with paddles
     if (
-        ball.x < player.x + player.width &&
-        ball.x + ball.radius > player.x &&
-        ball.y < player.y + player.height &&
-        ball.y + ball.radius > player.y
+        ball.x < player1.x + player1.width &&
+        ball.x + ball.radius > player1.x &&
+        ball.y < player1.y + player1.height &&
+        ball.y + ball.radius > player1.y
     ) {
         // Ball hit the player's paddle, reverse its horizontal direction
         ball.speedX = -ball.speedX;
