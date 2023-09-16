@@ -80,6 +80,7 @@ const levels = [
     { name: "Marx", color: "red", src: "/Development/kir-bong/Bosses/Marx2.png", ballSpeedX: 2.75, ballSpeedY: 2.75, computerSpeed: 2.75 },
     { name: "Whispy Woods", src: "/Development/kir-bong/Bosses/WhispyWoods2.png", color: "black", ballSpeedX: 3, ballSpeedY: 3, computerSpeed: 3 },
 ];
+let computerMoveCooldown = 0;
 let currentSongIndex = 0;
 let currentLevel = 0;
 let lastTime = 0; // Used to calculate time elapsed between frames
@@ -110,6 +111,32 @@ function stopGameProcesses() {
     // For example, if you have any setTimeout or setInterval timers, clear them here
     clearInterval(timerId);
     // You can add more logic to stop other game-related processes as needed
+}
+function updateComputerMovement() {
+    // Check if the cooldown timer has elapsed
+    if (computerMoveCooldown <= 0) {
+        // Generate a random number between -1 and 1
+        const randomMovement = (Math.random() - 0.5) * 2;
+
+        // Apply the random movement to the computer's paddle
+        computer.dy = randomMovement * computer.speed;
+
+        // Set a new cooldown timer (adjust the duration as needed)
+        computerMoveCooldown = 100; // 1000 milliseconds (1 second)
+    } else {
+        // Decrement the cooldown timer
+        computerMoveCooldown -= deltaTime;
+    }
+
+    // Update the computer's paddle position
+    computer.y += computer.dy * deltaTime;
+
+    // Ensure the computer's paddle stays within the canvas boundaries
+    if (computer.y < 0) {
+        computer.y = 0;
+    } else if (computer.y + computer.height > canvas.height) {
+        computer.y = canvas.height - computer.height;
+    }
 }
 // Function to pause the game
 function pauseGame() {
@@ -329,19 +356,7 @@ function updateGameLogic() {
     } else if (player1.y + player1.height > canvas.height) {
         player1.y = canvas.height - player1.height;
     }
-    // Update the computer's paddle position to track the ball
-    const computerTargetY = ball.y - computer.height / 2;
-    if (computerTargetY < computer.y) {
-        computer.y -= computer.speed * deltaTime;
-    } else if (computerTargetY > computer.y) {
-        computer.y += computer.speed * deltaTime;
-    }
-    // Ensure the computer's paddle stays within the canvas boundaries
-    if (computer.y < 0) {
-        computer.y = 0;
-    } else if (computer.y + computer.height > canvas.height) {
-        computer.y = canvas.height - computer.height;
-    }
+    updateComputerMovement();
     // Update ball position
     ball.x += ball.speedX * deltaTime;
     ball.y += ball.speedY * deltaTime;
