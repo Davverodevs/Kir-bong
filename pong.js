@@ -1,6 +1,6 @@
 // Get references to the menu and canvas elements
 const menu = document.getElementById("menu");
-const canvas = document.getElementById("gameCanvas"); // Get a reference to the canvas element
+const canvas = document.getElementById("gameCanvas"); 
 // Add event listeners for the menu buttons
 const startButton = document.getElementById("startButton");
 // Get a reference to the restart button element
@@ -40,7 +40,7 @@ const player2 = {
     width: paddleWidth,
     height: paddleHeight,
     speed: 1,
-    color: "sky blue"
+    color: "sky blue" //or "dark blue"
 };
 const songs = [
     document.getElementById("ng1"),
@@ -109,29 +109,23 @@ function stopGameProcesses() {
     // Pause any ongoing animations or timers
     cancelAnimationFrame(animationFrameId); // Stop the game loop
     // Stop any other ongoing processes or animations in your game
-    // For example, if you have any setTimeout or setInterval timers, clear them here
     clearInterval(timerId);
-    // You can add more logic to stop other game-related processes as needed
 }
 function updateComputerMovement() {
     // Check if the cooldown timer has elapsed
     if (computerMoveCooldown <= 0) {
         // Generate a random number between -1 and 1
         const randomMovement = (Math.random() - 0.5) * 2;
-
         // Apply the random movement to the computer's paddle
         computer.dy = randomMovement * computer.speed;
-
         // Set a new cooldown timer (adjust the duration as needed)
         computerMoveCooldown = 100; // 1000 milliseconds (1 second)
     } else {
         // Decrement the cooldown timer
         computerMoveCooldown -= deltaTime;
     }
-
     // Update the computer's paddle position
     computer.y += computer.dy * deltaTime;
-
     // Ensure the computer's paddle stays within the canvas boundaries
     if (computer.y < 0) {
         computer.y = 0;
@@ -152,9 +146,7 @@ function startGameProcesses() {
     // Resume the game loop
     requestAnimationFrame(gameLoop);
     // Restart any other timers or processes that were paused
-    // For example, if you have any setTimeout or setInterval timers, start them again
     timerId = setInterval(updateGameLogic, interval); // Replace with your specific timers
-    // You can add more logic to resume other game-related processes as needed
 }
 // Function to resume the game
 function resumeGame() {
@@ -189,7 +181,6 @@ document.addEventListener("keydown", function (event) {
             showPauseMessage(); 
             togglePause(); // Pause the game
         } else if (isGameRunning && gameIsPaused) {
-            
             hidePauseMessage();
             togglePause();
         }
@@ -199,13 +190,11 @@ function randomizeDirection() {
     // Generate a random number between -1 and 1
     const randomX = Math.random() * 2 - 1;
     const randomY = Math.random() * 2 - 1;
-  
     // Normalize the vector (X and Y components) to maintain constant speed
     const length = Math.sqrt(randomX * randomX + randomY * randomY);
     const speed = 1; // Adjust this value to control the ball's speed
     const speedX = (randomX / length) * speed;
     const speedY = (randomY / length) * speed;
-  
     return { speedX, speedY };
 }
 function shuffleArray(array) {
@@ -410,7 +399,6 @@ function updateGameLogic() {
         // Reset the ball's position
         resetBall();
     }
-    // Other game logic...
 }
 function runGameLoop(timestamp) {
     // Calculate deltaTime (time elapsed since the last frame)
@@ -433,7 +421,6 @@ function runGameLoop(timestamp) {
 function hideGameOverMessage() {
     // Get a reference to the game over message element by its ID
     const gameOverMessage = document.getElementById("gameOverMessage"); // Replace "gameOverMessage" with your actual ID
-
     // Check if the game over message element exists
     if (gameOverMessage) {
         // Hide the game over message by setting its style to "display: none;"
@@ -451,10 +438,8 @@ startButton.addEventListener("click", () => {
 restartButton.addEventListener("click", () => {
     // Call the initializeGame function to restart the game
     initializeGame();
-    
     // Hide the game over message if it's displayed
     hideGameOverMessage(); // You'll need to define this function
-    
     // Resume the game loop if it was paused
     if (!isGameRunning) {
         isGameRunning = true;
