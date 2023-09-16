@@ -58,9 +58,9 @@ const songs = [
 ];
 const computer = {
     x: canvas.width - paddleWidth,
-    y: (canvas.height / 2 - paddleHeight / 2),
+    y: (canvas.height / 2 - paddleHeight / 2) / 3,
     width: paddleWidth,
-    height: paddleHeight,
+    height: paddleHeight * 3,
     speed: 3,
     color: "red",
     name: "Devs",
@@ -68,17 +68,17 @@ const computer = {
 };
 // Define the levels
 const levels = [
-    { name: "Whispy Woods", color: "green", src: "/Development/kir-bong/Bosses/WhispyWoods.png", ballSpeedX: 0.5, ballSpeedY: 0.5, computerSpeed: 0.5 },
-    { name: "Waddle Dee", color: "blue", src: "/Development/kir-bong/Bosses/WaddleDee.png", ballSpeedX: 0.75, ballSpeedY: 0.75, computerSpeed: 0.75 },
-    { name: "Waddle Doo", color: "orange", src: "/Development/kir-bong/Bosses/WaddleDoo.png", ballSpeedX: 1, ballSpeedY: 1, computerSpeed: 1 },
-    { name: "King Dedede", color: "blue", src: "/Development/kir-bong/Bosses/KingDedede.png", ballSpeedX: 1.25, ballSpeedY: 1.25, computerSpeed: 1.25 },
-    { name: "Marx", color: "purple", src: "/Development/kir-bong/Bosses/Marx.png", ballSpeedX: 1.5, ballSpeedY: 1.5, computerSpeed: 1.5 },
-    { name: "Miracle Matter", color: "grey", src: "/Development/kir-bong/Bosses/MiracleMatter.png", ballSpeedX: 1.75, ballSpeedY: 1.75, computerSpeed: 1.75 },
-    { name: "Dark Matter", color: "black", src: "/Development/kir-bong/Bosses/DarkMatter.png", ballSpeedX: 2, ballSpeedY: 2, computerSpeed: 2 },
-    { name: "0 2", color: "white", src: "/Development/kir-bong/Bosses/02.png", ballSpeedX: 2.25, ballSpeedY: 2.25, computerSpeed: 2.25 },
-    { name: "Dark Mind", color: "purple", src: "/Development/kir-bong/Bosses/DorkMind.png", ballSpeedX: 2.5, ballSpeedY: 2.5, computerSpeed: 2.5 },
-    { name: "Marx", color: "red", src: "/Development/kir-bong/Bosses/Marx2.png", ballSpeedX: 2.75, ballSpeedY: 2.75, computerSpeed: 2.75 },
-    { name: "Whispy Woods", src: "/Development/kir-bong/Bosses/WhispyWoods2.png", color: "black", ballSpeedX: 3, ballSpeedY: 3, computerSpeed: 3 },
+    { name: "Whispy Woods", color: "green", src: "/Development/kir-bong/Bosses/WhispyWoods.png", number: 0.5},
+    { name: "Waddle Dee", color: "blue", src: "/Development/kir-bong/Bosses/WaddleDee.png", number: 0.75},
+    { name: "Waddle Doo", color: "orange", src: "/Development/kir-bong/Bosses/WaddleDoo.png", number: 1},
+    { name: "King Dedede", color: "blue", src: "/Development/kir-bong/Bosses/KingDedede.png", number: 1.25},
+    { name: "Marx", color: "purple", src: "/Development/kir-bong/Bosses/Marx.png", number: 1.5},
+    { name: "Miracle Matter", color: "grey", src: "/Development/kir-bong/Bosses/MiracleMatter.png", number: 1.75},
+    { name: "Dark Matter", color: "black", src: "/Development/kir-bong/Bosses/DarkMatter.png", number: 2},
+    { name: "Zero2", color: "white", src: "/Development/kir-bong/Bosses/02.png", number: 2.25},
+    { name: "Dark Mind", color: "purple", src: "/Development/kir-bong/Bosses/DorkMind.png", number: 2.5},
+    { name: "Marx", color: "red", src: "/Development/kir-bong/Bosses/Marx2.png", number: 2.75},
+    { name: "Whispy Woods", color: "black", src: "/Development/kir-bong/Bosses/WhispyWoods2.png", number: 3},
 ];
 let computerMoveCooldown = 0;
 let currentSongIndex = 0;
@@ -200,23 +200,25 @@ function shuffleArray(array) {
 }
 function initializeLevel(level) {
     // Set game parameters based on the current level
-    ball.speedX = levels[level].ballSpeedX;
-    ball.speedY = levels[level].ballSpeedY;
-    computer.speed = levels[level].computerSpeed;
+    ball.speedX = levels[level].number;
+    ball.speedY = levels[level].number;
+    computer.speed = levels[level].number;
+    computer.y = (canvas.height / 2 - paddleHeight / 2) / (levels[level].number),
+    computer.height = paddleHeight * (levels[level].number),
     computer.color = levels[level].color;
     computer.name = levels[level].name;
-    // computer.height = levels[level].paddleSize;
     // Update the computer's image source based on the level
     computer.src = levels[level].src;
     // Get a reference to the computerName image element by its ID
     const computerNameImage = document.getElementById("computerName");
     // Change the src attribute to the new image source
     computerNameImage.src = computer.src;
+    computerScore = 0;
 }
 // Function to update the player's name display
 function updatePlayerNameDisplay() {
     const playerName = document.getElementById("playerName");
-    playerName.src = "/MC/Kirbo3.png";
+    playerName.src = "/MC/Kirbo.png";
 }
 // Start playing the background music
 function playBackgroundMusic() {
