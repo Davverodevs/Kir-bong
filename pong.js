@@ -1,4 +1,5 @@
 let difficulty = 1; // Set the difficulty for the game (adjust as needed)
+// let selectedLanguage = "english";
 let initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
 let initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
 let computerMoveCooldown = 0;
@@ -15,7 +16,7 @@ let downPressed = false;
 let isGameOver = false;
 let gameIsPaused = false; // Track whether the game is currently paused
 // Get references to the menu and canvas elements
-const menu = document.getElementById("menu");
+let menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); 
 // Add event listeners for the menu buttons
 const startButton = document.getElementById("startButton");
@@ -24,6 +25,7 @@ const restartButton = document.getElementById("restartButton");
 // Add an event listener for the "2 Player" button
 const twoPlayerButton = document.getElementById("twoPlayerButton");
 const instructionsButton = document.getElementById("instructionsButton");
+const changeLanguageButton = document.getElementById("changeLanguageButton");
 const scoreLimit = 3; // Set a score limit for winning the game (adjust as needed)
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
@@ -82,6 +84,23 @@ const computer = {
     name: "Devs",
     src: "/Bosses/DorkMind2.png"
 };
+// Function to load menu content based on language
+function loadMenuContent(language) {
+    // Define the path to the language-specific menu HTML file
+    let menuPath = `Languages/menu_${language}.html`;
+
+    // Use fetch to load the menu content
+    fetch(menuPath)
+        .then(response => response.text())
+        .then(data => {
+            // Replace the current menu content with the loaded content
+            const menu = document.getElementById("menu");
+            menu.innerHTML = data;
+        })
+        .catch(error => {
+            console.error("Error loading menu content:", error);
+        });
+}
 // Add an event listener to the "Start Game" button
 document.getElementById("startButton").addEventListener("click", () => {
     // Show the menu when the button is clicked
@@ -96,8 +115,60 @@ document.getElementById("startButton").addEventListener("click", () => {
         difficulty = 1;
     } else if (selectedDifficulty === "hard") {
         difficulty = 1.5;
-    }
+    } 
+    // else if (selectedDifficulty === "impossible") {
+    //     difficulty = 2;
+    // }
+    // Get the selected language
+    // const languageSelect = document.getElementById("language");
+    // const selectedLanguage = languageSelect.value;
+    // loadMenuContent(selectedLanguage)
 });
+changeLanguageButton.addEventListener("click", () => {
+    // Get the selected language from the dropdown
+    const languageSelect = document.getElementById("language");
+    let selectedLanguage = languageSelect.value;
+
+    // Load the menu content for the selected language
+    loadMenuContent(selectedLanguage);
+});
+const translations = {
+    en: {
+        startButton: "Story Mode",
+        twoPlayerButton: "Party Mode (WIP)",
+        instructionsButton: "Instructions",
+        language: "Language",
+        difficulty: "Difficulty"
+    },
+    fr: {
+        startButton: "Mode Histoire",
+        twoPlayerButton: "Mode de Fête (WIP)",
+        instructionsButton: "Instructions",
+        language: "Langue",
+        difficulty: "Difficulté"
+    },
+    es: {
+        startButton: "Modo Historia",
+        twoPlayerButton: "Modo Fiesta (WIP)",
+        instructionsButton: "Instrucciones",
+        language: "Idioma",
+        difficulty: "Dificultad"
+    },
+    de: {
+        startButton: "Geschichtsmodus",
+        twoPlayerButton: "Party Modus (WIP)",
+        instructionsButton: "Anweisungen",
+        language: "Sprache",
+        difficulty: "Schwierigkeit"
+    },
+    it: {
+        startButton: "Modalità storia",
+        twoPlayerButton: "Modalità festa (WIP)",
+        instructionsButton: "Istruzioni",
+        language: "Lingua",
+        difficulty: "Difficoltà"
+    }
+};
 // Define the levels
 const levels = [
     { name: "Whispy Woods", color: "green", src: "/Development/kir-bong/Bosses/WhispyWoods.png", number: 0.5},
