@@ -7,10 +7,13 @@ TODO:
 -Make Menu Buttons display vertically and centered
 -Add to Welcome Menu
   -Multiplayer option (Party mode)!!!
+    -Players can choose a character? (unblock them with story mode?)
   -Change Settings 
-    -Difficulty (easy, normal, hard, insane?)!!!
+    -Difficulty (easy, normal, hard, insane?)!!! 
+      -IDEA: multiply number of each level by Difficulty (easy= x0.5, normal = x1, hard = x1.5, insane = 2.0?)
     -Languages (en, es, fr, de, it?, pt?, ...?)
 -Elaborate more on "Story Mode"?
+  -Give it a Story?
 
 Nice to have:
 -Abilities for each character?
