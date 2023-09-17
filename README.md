@@ -3,15 +3,10 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game -> Fighting game -> Racing game
 
 TODO:
--Make Welcome Menu cuter and give it more functions (WIP)!!!
--Make Menu Buttons display vertically and centered
+-Make Welcome Menu cuter (Menu Buttons display vertically and centered?)
 -Add to Welcome Menu
   -Multiplayer option (Party mode)!!!
     -Players can choose a character? (unblock them with story mode?)
-  -Change Settings 
-    -Difficulty (easy, normal, hard, insane?)!!! 
-      -IDEA: multiply number of each level by Difficulty (easy= x0.5, normal = x1, hard = x1.5, insane = 2.0?)
-    -Languages (en, es, fr, de, it?, pt?, ...?)
 -Elaborate more on "Story Mode"?
   -Give it a Story?
 
