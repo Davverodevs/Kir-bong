@@ -1,3 +1,19 @@
+let difficulty = 1; // Set the difficulty for the game (adjust as needed)
+let initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
+let initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
+let computerMoveCooldown = 0;
+let currentSongIndex = 0;
+let currentLevel = 0;
+let lastTime = 0; // Used to calculate time elapsed between frames
+let deltaTime = 0; // Time elapsed since the last frame
+let isGameRunning = true; // A flag to control the game state
+let playerScore = 0;
+let computerScore = 0;
+// Define variables to track player input
+let upPressed = false;
+let downPressed = false;
+let isGameOver = false;
+let gameIsPaused = false; // Track whether the game is currently paused
 // Get references to the menu and canvas elements
 const menu = document.getElementById("menu");
 const canvas = document.getElementById("gameCanvas"); 
@@ -9,8 +25,6 @@ const restartButton = document.getElementById("restartButton");
 const twoPlayerButton = document.getElementById("twoPlayerButton");
 const instructionsButton = document.getElementById("instructionsButton");
 const scoreLimit = 3; // Set a score limit for winning the game (adjust as needed)
-const initialBallSpeedX = 1; // Adjust the initial X-axis speed as needed
-const initialBallSpeedY = 1; // Adjust the initial Y-axis speed as needed
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
 const backgroundMusic = document.getElementById("backgroundMusic");
 const paddleWidth = 10;
@@ -68,6 +82,22 @@ const computer = {
     name: "Devs",
     src: "/Bosses/DorkMind2.png"
 };
+// Add an event listener to the "Start Game" button
+document.getElementById("startButton").addEventListener("click", () => {
+    // Show the menu when the button is clicked
+    document.getElementById("menu").style.display = "block";
+    // Get the selected difficulty level
+    const difficultySelect = document.getElementById("difficulty");
+    const selectedDifficulty = difficultySelect.value;
+    // Start the game with the selected difficulty
+    if (selectedDifficulty === "easy") {
+        difficulty = 0.5;
+    } else if (selectedDifficulty === "medium") {
+        difficulty = 1;
+    } else if (selectedDifficulty === "hard") {
+        difficulty = 1.5;
+    }
+});
 // Define the levels
 const levels = [
     { name: "Whispy Woods", color: "green", src: "/Development/kir-bong/Bosses/WhispyWoods.png", number: 0.5},
@@ -82,24 +112,6 @@ const levels = [
     { name: "Marx", color: "red", src: "/Development/kir-bong/Bosses/Marx2.png", number: 2.75},
     { name: "Whispy Woods", color: "black", src: "/Development/kir-bong/Bosses/WhispyWoods2.png", number: 3},
 ];
-let computerMoveCooldown = 0;
-let currentSongIndex = 0;
-let currentLevel = 0;
-let lastTime = 0; // Used to calculate time elapsed between frames
-let deltaTime = 0; // Time elapsed since the last frame
-let isGameRunning = true; // A flag to control the game state
-let playerScore = 0;
-let computerScore = 0;
-// Define variables to track player input
-let upPressed = false;
-let downPressed = false;
-let isGameOver = false;
-let gameIsPaused = false; // Track whether the game is currently paused
-// Add an event listener to the "Start Game" button
-document.getElementById("startButton").addEventListener("click", () => {
-    // Show the menu when the button is clicked
-    document.getElementById("menu").style.display = "block";
-});
 // Add event listeners to handle player input
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("keydown", handleKeyDown);
@@ -205,11 +217,11 @@ function shuffleArray(array) {
 }
 function initializeLevel(level) {
     // Set game parameters based on the current level
-    ball.speedX = levels[level].number;
-    ball.speedY = levels[level].number;
-    computer.speed = levels[level].number;
+    ball.speedX = levels[level].number * difficulty;
+    ball.speedY = levels[level].number * difficulty;
+    computer.speed = levels[level].number * difficulty;
     computer.y = (canvas.height / 2 - paddleHeight / 2) / (levels[level].number),
-    computer.height = paddleHeight * (levels[level].number),
+    computer.height = paddleHeight * (levels[level].number) * difficulty,
     computer.color = levels[level].color;
     computer.name = levels[level].name;
     // Update the computer's image source based on the level

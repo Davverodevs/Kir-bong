@@ -158,9 +158,23 @@
         <h1>Kir-bong!</h1>
         <button class="menu-button" id="startButton">Story Mode</button>
         <button class="menu-button" id="twoPlayerButton">Party Mode (WIP)</button>
-        <button class="menu-button" id="settingsButton">Settings (WIP)</button>
-        <button class="menu-button" id="languageButton">Language (WIP)</button>
         <button class="menu-button" id="instructionsButton">Instructions</button>
+        <label for="difficulty">Difficulty:</label>
+            <select id="difficulty" name="difficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        <label for="language">Language:</label>
+            <select id="language" name="language">
+                <option value="english">English</option>
+                <option value="french">Français</option>
+                <!--<option value="mandarin">官话</option> WIP-->
+                <option value="spanish">Español</option>
+                <option value="german">Deutsch</option>
+                <!--<option value="japanese">日本語</option> WIP-->
+                <option value="italian">Italiano</option>
+            </select>
     </div>
     <!-- Include your JavaScript file here -->
     <script src="pong.js"></script>
