@@ -1,6 +1,6 @@
 # Kir-bong is a fan-game in its alpha phase (deadline: 01.11.2023)
 Main idea: The classical PONG game but with kirby as the MC/Star
-Proposals: PONG game -> Fighting game -> Racing game
+Proposals: PONG game (first) -> Fighting game (third) -> Racing game (second)
 
 TODO:
 -Make Welcome Menu cuter and give it more functions (WIP)!!!
