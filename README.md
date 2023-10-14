@@ -3,14 +3,17 @@ Main idea: The classical PONG game but with kirby as the MC/Star
 Proposals: PONG game (first) -> Fighting game (third) -> Racing game (second)
 
 TODO:
--Make Welcome Menu cuter (Menu Buttons display vertically and centered?)
 -Add to Welcome Menu
-  -Multiplayer option (Party mode)!!!
-    -Players can choose a character? (unblock them with story mode?)
--Elaborate more on "Story Mode"?
-  -Give it a Story?
+  -Multiplayer option (Party mode)
+  -Fix selecting a language actually changes the language of the game
 
 Nice to have:
+-Make Welcome Menu cuter
+  -Menu Buttons display vertically and centered
+-Elaborate more on "Story Mode"
+  -Give it a 'Story'
+-Multiplayer option (Party mode):
+  -Players can choose a character (unblock them with story mode?)
 -Abilities for each character?
   -Multiple balls
   -Large ball
