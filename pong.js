@@ -21,8 +21,6 @@ const canvas = document.getElementById("gameCanvas");
 const startButton = document.getElementById("startButton");
 // Get a reference to the restart button element
 const restartButton = document.getElementById("restartButton");
-// Add an event listener for the "2 Player" button
-const twoPlayerButton = document.getElementById("twoPlayerButton");
 const instructionsButton = document.getElementById("instructionsButton");
 const scoreLimit = 3; // Set a score limit for winning the game (adjust as needed)
 const ctx = canvas.getContext("2d"); // Get the 2D rendering context
@@ -457,10 +455,6 @@ restartButton.addEventListener("click", () => {
         isGameRunning = true;
         runGameLoop(0); // Pass 0 as the initial timestamp
     }
-});
-twoPlayerButton.addEventListener("click", () => {
-    // Start a 2-player game when the "2 Player" button is clicked
-    // startTwoPlayerGame(); WIP
 });
 instructionsButton.addEventListener("click", () => {
     // Display game instructions when the "Instructions" button is clicked

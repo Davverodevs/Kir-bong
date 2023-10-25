@@ -1,6 +1,5 @@
 # Kir-bong is a fan-game in its alpha phase (deadline: 01.11.2023)
 Main idea: The classical PONG game but with kirby as the MC/Star
-Proposals: PONG game (first) -> Fighting game (third) -> Racing game (second)
 
 TODO:
 -Add to Welcome Menu
@@ -28,3 +27,11 @@ Nice to have:
   -Fast Paddle
   -Slow Paddle
 
+FUTURE WORK
+Video game Proposals:
+1. PONG game with chinese theme
+2. Racing game: Kirby kart -> Bolivia yungas road
+3. Fighting game: Kirby Super smash? or Super MMA bros?
+4. Space invaders
+
+Programming languages to use: Python and c/c++/c#
